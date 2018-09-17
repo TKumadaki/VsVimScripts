@@ -25,8 +25,10 @@ var DTE = GetDTE2();
 vimBuffer.KeyInputStart += OnKeyInputStart;
 vimBuffer.Closed += OnBufferClosed;
 
-DTE.ExecuteCommand("View.SolutionExplorer");
-DTE.ActiveDocument.Activate();
+//not work
+//Vim.VimHost.RunHostCommand(vimBuffer.TextView, "View.SolutionExplorer", string.Empty);
+//DTE.ExecuteCommand("View.SolutionExplorer");
+//DTE.ActiveDocument.Activate();
 
 UIHierarchy solutionExplorer = DTE.ToolWindows.SolutionExplorer;
 Action messageAction = null;
