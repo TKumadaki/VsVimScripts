@@ -147,7 +147,7 @@ private void NormalMode(object sender, KeyInputStartEventArgs e)
 }
 private void SwitchDeleteMode(string fileName)
 {
-    messageAction = () => DisplayStatus($"delete {fileName} (y/n)?");
+    messageAction = () => DisplayStatus($"delete {fileName}? (y/n)");
     messageAction.Invoke();
     modeAction = DeleteMode;
 }
@@ -164,7 +164,7 @@ private void DeleteMode(object sender, KeyInputStartEventArgs e)
 }
 private void SwitchExitMode()
 {
-    messageAction = () => DisplayStatus($"Do you want to exit? (y/n)?");
+    messageAction = () => DisplayStatus("Do you want to exit? (y/n)");
     messageAction.Invoke();
     modeAction = ExitMode;
 }
@@ -272,7 +272,7 @@ private void Search(string keyword, UIHierarchy solutionExplorer, object startIt
     var searchList = new List<SearchItem>();
     UIHierarchyItem rootNode = solutionExplorer.UIHierarchyItems.Item(1);
 
-    GetSearchList(ref searchList, solutionExplorer, rootNode);
+    GetSearchList(ref searchList, rootNode);
 
     if (searchList.Count == 0)
     {
@@ -357,11 +357,11 @@ private void CollapseProject(UIHierarchy solutionExplorer, bool expanded)
     }
     UIHierarchyItem rootNode = solutionExplorer.UIHierarchyItems.Item(1);
 
-    CollapseProject(solutionExplorer, rootNode, expanded);
+    CollapseProject(rootNode, expanded);
 
     rootNode.Select(vsUISelectionType.vsUISelectionTypeSelect);
 }
-private void CollapseProject(UIHierarchy solutionExplorer, UIHierarchyItem item, bool expanded)
+private void CollapseProject(UIHierarchyItem item, bool expanded)
 {
     foreach (UIHierarchyItem innerItem in item.UIHierarchyItems)
     {
@@ -373,7 +373,7 @@ private void CollapseProject(UIHierarchy solutionExplorer, UIHierarchyItem item,
 
         if (0 < innerItem.UIHierarchyItems.CountEx())
         {
-            CollapseProject(solutionExplorer, innerItem, expanded);
+            CollapseProject(innerItem, expanded);
 
             innerItem.UIHierarchyItems.Expanded = expanded;
         }
@@ -393,7 +393,7 @@ private class SearchItem
     public string Name { get; set; } = string.Empty;
     public UIHierarchyItem Item { get; set; } = null;
 }
-private void GetSearchList(ref List<SearchItem> searchList, UIHierarchy solutionExplorer, UIHierarchyItem item)
+private void GetSearchList(ref List<SearchItem> searchList, UIHierarchyItem item)
 {
     foreach (UIHierarchyItem innerItem in item.UIHierarchyItems)
     {
@@ -412,7 +412,7 @@ private void GetSearchList(ref List<SearchItem> searchList, UIHierarchy solution
 
         if (0 < innerItem.UIHierarchyItems.CountEx())
         {
-            GetSearchList(ref searchList, solutionExplorer, innerItem);
+            GetSearchList(ref searchList, innerItem);
         }
     }
 }
