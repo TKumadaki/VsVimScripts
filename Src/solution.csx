@@ -8,9 +8,9 @@ using System.Collections.Generic;
 using System.IO;
 using Vim;
 
-const string PhysicalFile = "{6BB5F8EE-4483-11D3-8BCF-00C04F8EC28C}"; //GUID_ItemType_PhysicalFile
-const string SolutionItem = "{66A26722-8FB5-11D2-AA7E-00C04F688DDE}"; //VsProjectItemKindSolutionItem
-const string VirtualFolder = "{6BB5F8F0-4483-11D3-8BCF-00C04F8EC28C}"; //GUID_ItemType_VirtualFolder
+const string PhysicalFile = "{6BB5F8EE-4483-11D3-8BCF-00C04F8EC28C}";   //GUID_ItemType_PhysicalFile
+const string SolutionItem = "{66A26722-8FB5-11D2-AA7E-00C04F688DDE}";   //VsProjectItemKindSolutionItem
+const string VirtualFolder = "{6BB5F8F0-4483-11D3-8BCF-00C04F8EC28C}";  //GUID_ItemType_VirtualFolder
 
 IVimBuffer vimBuffer;
 
@@ -81,6 +81,14 @@ private void NormalMode(object sender, KeyInputStartEventArgs e)
     {
         SwitchSearchMode(forward: false);
     }
+    else if (e.KeyInput.Char == '/')
+    {
+        SwitchIncrementalSearchMode(forward: true);
+    }
+    else if (e.KeyInput.Char == '?')
+    {
+        SwitchIncrementalSearchMode(forward: false);
+    }
     else if (e.KeyInput.Char == 'j')
     {
         solutionExplorer.SelectDown(vsUISelectionType.vsUISelectionTypeSelect, 1);
@@ -92,31 +100,29 @@ private void NormalMode(object sender, KeyInputStartEventArgs e)
     else if (e.KeyInput.Char == 'h')
     {
         UIHierarchyItem item = GetUIHierarchyItem();
-        if (item?.Collection.Parent is UIHierarchyItem parent)
-        {
-            parent.Select(vsUISelectionType.vsUISelectionTypeSelect);
-        }
+        UIHierarchyItem parent = item?.Collection.Parent as UIHierarchyItem;
+
+        if (parent == null)
+            return;
+
+        parent.Select(vsUISelectionType.vsUISelectionTypeSelect);
+        parent.UIHierarchyItems.Expanded = false;
     }
     else if (e.KeyInput.Char == 'l')
     {
         UIHierarchyItem item = GetUIHierarchyItem();
-        if (0 < item.UIHierarchyItems.Count)
+        if (0 < item.UIHierarchyItems.CountEx())
         {
             item.UIHierarchyItems.Expanded = true;
-            if (item.UIHierarchyItems.Expanded != true)
-            {
-                item.Select(vsUISelectionType.vsUISelectionTypeSelect);
-                solutionExplorer.DoDefaultAction();
-            }
         }
     }
     else if (e.KeyInput.Char == 'n')
     {
-        Search(lastSearchKeyword, solutionExplorer, startItem: GetUIHierarchyItem(), forward: lastSearchForward);
+        Search(lastSearchKeyword, solutionExplorer, startItem: GetUIHierarchyItem(), forward: lastSearchForward, switchNormalMode:false);
     }
     else if (e.KeyInput.Char == 'N')
     {
-        Search(lastSearchKeyword, solutionExplorer, startItem: GetUIHierarchyItem(), forward: !lastSearchForward);
+        Search(lastSearchKeyword, solutionExplorer, startItem: GetUIHierarchyItem(), forward: !lastSearchForward, switchNormalMode:false);
     }
     else if (e.KeyInput.Char == 'r')
     {
@@ -136,7 +142,7 @@ private void NormalMode(object sender, KeyInputStartEventArgs e)
     }
     else if (e.KeyInput.Key == VimKey.Escape)
     {
-        InterceptEnd();
+        SwitchExitMode();
     }
 }
 private void SwitchDeleteMode(string fileName)
@@ -152,6 +158,22 @@ private void DeleteMode(object sender, KeyInputStartEventArgs e)
         ProjectItem pi = GetProjectItem();
         //pi?.Remove(); //Removes the project item from the collection.
         pi?.Delete(); //Removes the item from its project and its storage.
+    }
+
+    SwitchNormalMode(swichMessage: true);
+}
+private void SwitchExitMode()
+{
+    messageAction = () => DisplayStatus($"Do you want to exit? (y/n)?");
+    messageAction.Invoke();
+    modeAction = ExitMode;
+}
+private void ExitMode(object sender, KeyInputStartEventArgs e)
+{
+    if (e.KeyInput.Char == 'y')
+    {
+        InterceptEnd();
+        return;
     }
 
     SwitchNormalMode(swichMessage: true);
@@ -173,7 +195,7 @@ private void SearchMode(object sender, KeyInputStartEventArgs e)
     }
     else if (e.KeyInput.Key == VimKey.Enter)
     {
-        Search(buffer, solutionExplorer, startItem: GetUIHierarchyItem(), forward: currentSearchForward);
+        Search(buffer, solutionExplorer, startItem: GetUIHierarchyItem(), forward: currentSearchForward, switchNormalMode:true);
     }
     else if (e.KeyInput.Key == VimKey.Back)
     {
@@ -191,7 +213,47 @@ private void SearchMode(object sender, KeyInputStartEventArgs e)
         buffer += e.KeyInput.Char;
     }
 }
-private void Search(string keyword, UIHierarchy solutionExplorer, object startItem, bool forward)
+private void SwitchIncrementalSearchMode(bool forward)
+{
+    buffer = string.Empty;
+    messageAction = () => DisplayStatus($"{(forward ? "/" : "?")}{buffer}");
+    messageAction.Invoke();
+
+    currentSearchForward = forward;
+    modeAction = IncrementalSearchMode;
+}
+private void IncrementalSearchMode(object sender, KeyInputStartEventArgs e)
+{
+    if (e.KeyInput.Key == VimKey.Escape)
+    {
+        SwitchNormalMode(swichMessage: true);
+        return;
+    }
+
+    if (e.KeyInput.Key == VimKey.Enter)
+    {
+        Search(buffer, solutionExplorer, startItem: GetUIHierarchyItem(), forward: currentSearchForward, switchNormalMode:true);
+        return;
+    }
+
+    if (e.KeyInput.Key == VimKey.Back)
+    {
+        if (1 < buffer.Length)
+        {
+            buffer = buffer.Substring(0, buffer.Length - 1);
+        }
+        else if (buffer.Length == 1)
+        {
+            buffer = string.Empty;
+        }
+    }
+    else
+    {
+        buffer += e.KeyInput.Char;
+    }
+    Search(buffer, solutionExplorer, startItem: GetUIHierarchyItem(), forward: currentSearchForward, switchNormalMode:false);
+}
+private void Search(string keyword, UIHierarchy solutionExplorer, object startItem, bool forward, bool switchNormalMode)
 {
     if (string.IsNullOrWhiteSpace(keyword))
     {
@@ -200,7 +262,7 @@ private void Search(string keyword, UIHierarchy solutionExplorer, object startIt
         return;
     }
 
-    if (solutionExplorer.UIHierarchyItems.Count == 0)
+    if (solutionExplorer.UIHierarchyItems.CountEx() == 0)
     {
         messageAction = () => DisplayStatus("solution item 0.");
         SwitchNormalMode(swichMessage: false);
@@ -210,9 +272,7 @@ private void Search(string keyword, UIHierarchy solutionExplorer, object startIt
     var searchList = new List<SearchItem>();
     UIHierarchyItem rootNode = solutionExplorer.UIHierarchyItems.Item(1);
 
-    //DTE.SuppressUI = true;
     GetSearchList(ref searchList, solutionExplorer, rootNode);
-    //DTE.SuppressUI = false;
 
     if (searchList.Count == 0)
     {
@@ -264,6 +324,10 @@ private void Search(string keyword, UIHierarchy solutionExplorer, object startIt
         lastSearchKeyword = keyword;
         lastSearchForward = currentSearchForward;
     }
+
+    if (!switchNormalMode)
+        return;
+
     SwitchNormalMode(swichMessage: 0 <= index);
 }
 private void OnKeyInputStart(object sender, KeyInputStartEventArgs e)
@@ -287,35 +351,31 @@ private void InterceptEnd()
 }
 private void CollapseProject(UIHierarchy solutionExplorer, bool expanded)
 {
-    if (solutionExplorer.UIHierarchyItems.Count == 0)
+    if (solutionExplorer.UIHierarchyItems.CountEx() == 0)
     {
         return;
     }
     UIHierarchyItem rootNode = solutionExplorer.UIHierarchyItems.Item(1);
-    rootNode.DTE.SuppressUI = true;
 
     CollapseProject(solutionExplorer, rootNode, expanded);
 
     rootNode.Select(vsUISelectionType.vsUISelectionTypeSelect);
-    rootNode.DTE.SuppressUI = false;
 }
 private void CollapseProject(UIHierarchy solutionExplorer, UIHierarchyItem item, bool expanded)
 {
     foreach (UIHierarchyItem innerItem in item.UIHierarchyItems)
     {
-        if (0 < innerItem.UIHierarchyItems.Count)
+        ProjectItem pi = innerItem.Object as ProjectItem;
+        if (pi != null && (pi.Kind == VirtualFolder || pi.Kind == PhysicalFile || pi.Kind == SolutionItem))
+        {
+            continue;
+        }
+
+        if (0 < innerItem.UIHierarchyItems.CountEx())
         {
             CollapseProject(solutionExplorer, innerItem, expanded);
 
-            if (innerItem.UIHierarchyItems.Expanded != expanded)
-            {
-                innerItem.UIHierarchyItems.Expanded = expanded;
-                if (innerItem.UIHierarchyItems.Expanded != expanded)
-                {
-                    innerItem.Select(vsUISelectionType.vsUISelectionTypeSelect);
-                    solutionExplorer.DoDefaultAction();
-                }
-            }
+            innerItem.UIHierarchyItems.Expanded = expanded;
         }
     }
 }
@@ -350,14 +410,19 @@ private void GetSearchList(ref List<SearchItem> searchList, UIHierarchy solution
             continue;
         }
 
-        if (innerItem.UIHierarchyItems.Expanded == false)
-        {
-            innerItem.UIHierarchyItems.Expanded = true;
-            innerItem.UIHierarchyItems.Expanded = false;
-        }
-        if (0 < innerItem.UIHierarchyItems.Count)
+        if (0 < innerItem.UIHierarchyItems.CountEx())
         {
             GetSearchList(ref searchList, solutionExplorer, innerItem);
         }
     }
+}
+private static int CountEx(this UIHierarchyItems items)
+{
+    //UIHierarchyItems can not get count unless expanded.
+    if (items.Expanded == false)
+    {
+        items.Expanded = true;
+        items.Expanded = false;
+    }
+    return items.Count;
 }
