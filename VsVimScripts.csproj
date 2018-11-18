@@ -42,5 +42,8 @@
     <None Include="Src\solution.csx" />
     <None Include="Src\util.csx" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="License.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
