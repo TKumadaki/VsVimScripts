@@ -41,7 +41,6 @@ public void OnKeyInputStart(object sender, KeyInputStartEventArgs e)
 {
     e.Handled = true;
     EnvDTE.TextSelection selection;
-    int moveLine;
 
     if (e.KeyInput.Char == 'j')
     {

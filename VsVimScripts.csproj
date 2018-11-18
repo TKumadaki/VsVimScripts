@@ -34,6 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Src\bookmark.csx" />
     <None Include="Src\calledcount.csx" />
     <None Include="Src\findresults.csx" />
     <None Include="Src\methods.csx" />
