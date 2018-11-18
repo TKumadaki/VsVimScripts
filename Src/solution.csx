@@ -29,6 +29,7 @@ UIHierarchy solutionExplorer = DTE.ToolWindows.SolutionExplorer;
 string lastSearchKeyword = string.Empty;
 bool lastSearchForward = true;
 bool currentSearchForward = true;
+bool autoHides = true;
 
 Action messageAction = null;
 TinyVimMode currentVimMode = null;
@@ -41,86 +42,20 @@ TinyVimMode exitMode = new TinyVimMode();
 /* Normal Mode */
 normalMode.OnKeyInputStart = normalMode.OnKeyInputStartNormalMode;
 
-//Normal Mode:j Command
-var jCp = new CommandParser();
-normalMode.CommandParsers.Add(jCp);
+//Normal Mode:a Command
+var aCp = new CommandParser();
+normalMode.CommandParsers.Add(aCp);
 
-jCp.Regex = new Regex("^[0-9]*j$");
-jCp.CommandEquals = (x) =>
+aCp.CommandEquals = (x) =>
 {
-    return jCp.Regex.IsMatch(normalMode.Buffer);
+    return (x.Char == 'a');
 };
-jCp.CommandAction = (x) =>
-{
-    int count = RegexUtil.GetCount(normalMode.Buffer);
-    normalMode.Buffer = string.Empty;
-    for (int i = 0; i < count; i++)
-    {
-        solutionExplorer.SelectDown(vsUISelectionType.vsUISelectionTypeSelect, 1);
-    }
-};
-
-//Normal Mode:k Command
-var kCp = new CommandParser();
-normalMode.CommandParsers.Add(kCp);
-
-kCp.Regex = new Regex("^[0-9]*k$");
-kCp.CommandEquals = (x) =>
-{
-    return kCp.Regex.IsMatch(normalMode.Buffer);
-};
-kCp.CommandAction = (x) =>
-{
-    int count = RegexUtil.GetCount(normalMode.Buffer);
-    normalMode.Buffer = string.Empty;
-    for (int i = 0; i < count; i++)
-    {
-        solutionExplorer.SelectUp(vsUISelectionType.vsUISelectionTypeSelect, 1);
-    }
-};
-
-//Normal Mode:h Command
-var hCp = new CommandParser();
-normalMode.CommandParsers.Add(hCp);
-
-hCp.Regex = new Regex("^[0-9]*h$");
-hCp.CommandEquals = (x) =>
-{
-    return hCp.Regex.IsMatch(normalMode.Buffer);
-};
-hCp.CommandAction = (x) =>
-{
-    int count = RegexUtil.GetCount(normalMode.Buffer);
-    normalMode.Buffer = string.Empty;
-    for (int i = 0; i < count; i++)
-    {
-        UIHierarchyItem item = GetSelectedItem();
-        UIHierarchyItem parentItem = item?.Collection.Parent as UIHierarchyItem;
-
-        if (parentItem == null)
-            return;
-
-        parentItem.Select(vsUISelectionType.vsUISelectionTypeSelect);
-    }
-};
-
-//Normal Mode:l Command
-var lCp = new CommandParser();
-normalMode.CommandParsers.Add(lCp);
-
-lCp.CommandEquals = (x) =>
-{
-    return (x.Char == 'l');
-};
-lCp.CommandAction = (x) =>
+aCp.CommandAction = (x) =>
 {
     normalMode.Buffer = string.Empty;
-    UIHierarchyItem item = GetSelectedItem();
-    if (0 < item.UIHierarchyItems.CountEx())
-    {
-        item.UIHierarchyItems.Expanded = true;
-        item.UIHierarchyItems.Item(1).Select(vsUISelectionType.vsUISelectionTypeSelect);
-    }
+    InterceptEnd();
+    DTE.ExecuteCommand("View.SolutionExplorer");
+    DTE.ExecuteCommand("Project.AddNewItem");
 };
 
 //Normal Mode:c Command
@@ -163,6 +98,21 @@ CCp.CommandAction = (x) =>
     CollapseOrExpand(topItem, expand: false);
 };
 
+//Normal Mode:d Command
+var dCp = new CommandParser();
+normalMode.CommandParsers.Add(dCp);
+
+dCp.CommandEquals = (x) =>
+{
+    return (x.Char == 'd');
+};
+dCp.CommandAction = (x) =>
+{
+    normalMode.Buffer = string.Empty;
+    ProjectItem pi = GetSelectedProjectItem();
+    SwitchDeleteMode(pi?.Name);
+};
+
 //Normal Mode:e Command
 var eCp = new CommandParser();
 normalMode.CommandParsers.Add(eCp);
@@ -199,21 +149,6 @@ ECp.CommandAction = (x) =>
     }
     UIHierarchyItem topItem = solutionExplorer.UIHierarchyItems.Item(1);
     CollapseOrExpand(topItem, expand: true);
-};
-
-//Normal Mode:d Command
-var dCp = new CommandParser();
-normalMode.CommandParsers.Add(dCp);
-
-dCp.CommandEquals = (x) =>
-{
-    return (x.Char == 'd');
-};
-dCp.CommandAction = (x) =>
-{
-    normalMode.Buffer = string.Empty;
-    ProjectItem pi = GetSelectedProjectItem();
-    SwitchDeleteMode(pi?.Name);
 };
 
 //Normal Mode:f Command
@@ -291,6 +226,87 @@ GCp.CommandAction = (x) =>
     }
 };
 
+//Normal Mode:h Command
+var hCp = new CommandParser();
+normalMode.CommandParsers.Add(hCp);
+
+hCp.Regex = new Regex("^[0-9]*h$");
+hCp.CommandEquals = (x) =>
+{
+    return hCp.Regex.IsMatch(normalMode.Buffer);
+};
+hCp.CommandAction = (x) =>
+{
+    int count = RegexUtil.GetCount(normalMode.Buffer);
+    normalMode.Buffer = string.Empty;
+    for (int i = 0; i < count; i++)
+    {
+        UIHierarchyItem item = GetSelectedItem();
+        UIHierarchyItem parentItem = item?.Collection.Parent as UIHierarchyItem;
+
+        if (parentItem == null)
+            return;
+
+        parentItem.Select(vsUISelectionType.vsUISelectionTypeSelect);
+    }
+};
+
+//Normal Mode:j Command
+var jCp = new CommandParser();
+normalMode.CommandParsers.Add(jCp);
+
+jCp.Regex = new Regex("^[0-9]*j$");
+jCp.CommandEquals = (x) =>
+{
+    return jCp.Regex.IsMatch(normalMode.Buffer);
+};
+jCp.CommandAction = (x) =>
+{
+    int count = RegexUtil.GetCount(normalMode.Buffer);
+    normalMode.Buffer = string.Empty;
+    for (int i = 0; i < count; i++)
+    {
+        solutionExplorer.SelectDown(vsUISelectionType.vsUISelectionTypeSelect, 1);
+    }
+};
+
+//Normal Mode:k Command
+var kCp = new CommandParser();
+normalMode.CommandParsers.Add(kCp);
+
+kCp.Regex = new Regex("^[0-9]*k$");
+kCp.CommandEquals = (x) =>
+{
+    return kCp.Regex.IsMatch(normalMode.Buffer);
+};
+kCp.CommandAction = (x) =>
+{
+    int count = RegexUtil.GetCount(normalMode.Buffer);
+    normalMode.Buffer = string.Empty;
+    for (int i = 0; i < count; i++)
+    {
+        solutionExplorer.SelectUp(vsUISelectionType.vsUISelectionTypeSelect, 1);
+    }
+};
+
+//Normal Mode:l Command
+var lCp = new CommandParser();
+normalMode.CommandParsers.Add(lCp);
+
+lCp.CommandEquals = (x) =>
+{
+    return (x.Char == 'l');
+};
+lCp.CommandAction = (x) =>
+{
+    normalMode.Buffer = string.Empty;
+    UIHierarchyItem item = GetSelectedItem();
+    if (0 < item.UIHierarchyItems.CountEx())
+    {
+        item.UIHierarchyItems.Expanded = true;
+        item.UIHierarchyItems.Item(1).Select(vsUISelectionType.vsUISelectionTypeSelect);
+    }
+};
 
 //Normal Mode:n Command
 var nCp = new CommandParser();
@@ -318,6 +334,22 @@ NCp.CommandAction = (x) =>
 {
     normalMode.Buffer = string.Empty;
     Search(lastSearchKeyword, solutionExplorer, startItem: GetSelectedItem(), forward: !lastSearchForward, switchNormalMode: false);
+};
+
+//Normal Mode:r Command
+var rCp = new CommandParser();
+normalMode.CommandParsers.Add(rCp);
+
+rCp.CommandEquals = (x) =>
+{
+    return (x.Char == 'r');
+};
+rCp.CommandAction = (x) =>
+{
+    normalMode.Buffer = string.Empty;
+    InterceptEnd();
+    DTE.ExecuteCommand("View.SolutionExplorer");
+    DTE.ExecuteCommand("File.Rename");
 };
 
 //Normal Mode:/ Command
@@ -535,7 +567,6 @@ exitNoCp.CommandAction = (x) =>
     SwitchNormalMode(swichMessage: true);
 };
 
-
 UIHierarchyItem item = GetSelectedItem();
 item.Select(vsUISelectionType.vsUISelectionTypeSelect);
 
@@ -543,10 +574,11 @@ SwitchNormalMode(true);
 vimBuffer.KeyInputStart += OnKeyInputStart;
 vimBuffer.Closed += OnBufferClosed;
 
-//not work
-//Vim.VimHost.RunHostCommand(vimBuffer.TextView, "View.SolutionExplorer", string.Empty);
-//DTE.ExecuteCommand("View.SolutionExplorer");
-//DTE.ActiveDocument.Activate();
+autoHides = solutionExplorer.Parent.AutoHides;
+
+solutionExplorer.Parent.AutoHides = false;
+solutionExplorer.Parent.Activate();
+DTE.ActiveDocument.Activate();
 
 public void OnKeyInputStart(object sender, KeyInputStartEventArgs e)
 {
@@ -566,6 +598,7 @@ public void InterceptEnd()
     currentVimMode = null;
     messageAction = null;
     DisplayStatus(string.Empty);
+    solutionExplorer.Parent.AutoHides = autoHides;
 }
 private void SwitchExitMode()
 {
