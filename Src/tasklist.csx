@@ -15,13 +15,13 @@ const string vsWindowKindTaskList = "{4A9B7E51-AA16-11D0-A8C5-00A0C921A4D2}";
 
 IVimBuffer vimBuffer;
 
-if (!TryGetActiveVimBuffer(out vimBuffer))
+if (!Vim.TryGetActiveVimBuffer(out vimBuffer))
 {
-    DisplayError("Can not get VimBuffer");
+    Vim.DisplayError("Can not get VimBuffer");
     return;
 }
 
-var DTE = GetDTE2();
+var DTE = Util.GetDTE2();
 
 Window taskListWindow = DTE.Windows.Item(vsWindowKindTaskList);
 TaskList taskList = taskListWindow.Object as TaskList;
@@ -107,6 +107,6 @@ public void InterceptEnd()
     vimBuffer.KeyInputStart -= OnKeyInputStart;
     vimBuffer.Closed -= OnBufferClosed;
     //messageAction = null;
-    DisplayStatus(string.Empty);
+    Vim.DisplayStatus(string.Empty);
     taskListWindow.AutoHides = autoHides;
 }

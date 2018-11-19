@@ -8,15 +8,15 @@ using Vim;
 IVimBuffer vimBuffer;
 IWpfTextView textView;
 
-if (!TryGetActiveVimBuffer(out vimBuffer))
+if (!Vim.TryGetActiveVimBuffer(out vimBuffer))
 {
-    DisplayError("Can not get VimBuffer");
+    Vim.DisplayError("Can not get VimBuffer");
     return;
 }
 
-if (!TryGetWpfTextView(vimBuffer, out textView))
+if (!vimBuffer.TryGetWpfTextView(out textView))
 {
-    DisplayError("Can not get WpfTextView");
+    Vim.DisplayError("Can not get WpfTextView");
     return;
 }
 

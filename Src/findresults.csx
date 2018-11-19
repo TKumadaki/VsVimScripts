@@ -14,13 +14,13 @@ const string vsWindowKindFindResults1 = "{0F887920-C2B6-11D2-9375-0080C747D9A0}"
 
 IVimBuffer vimBuffer;
 
-if (!TryGetActiveVimBuffer(out vimBuffer))
+if (!Vim.TryGetActiveVimBuffer(out vimBuffer))
 {
-    DisplayError("Can not get VimBuffer");
+    Vim.DisplayError("Can not get VimBuffer");
     return;
 }
 
-var DTE = GetDTE2();
+var DTE = Util.GetDTE2();
 
 Window findResultsWindow = DTE.Windows.Item(vsWindowKindFindResults1);
 
@@ -78,6 +78,6 @@ public void InterceptEnd()
     vimBuffer.KeyInputStart -= OnKeyInputStart;
     vimBuffer.Closed -= OnBufferClosed;
     //messageAction = null;
-    DisplayStatus(string.Empty);
+    Vim.DisplayStatus(string.Empty);
     findResultsWindow.AutoHides = autoHides;
 }

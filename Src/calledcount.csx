@@ -4,5 +4,5 @@ static int callCount = 0;
 
 callCount++;
 
-DisplayStatus($"Called Count {callCount}");
+Vim.DisplayStatus($"Called Count {callCount}");
 

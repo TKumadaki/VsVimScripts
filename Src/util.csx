@@ -7,29 +7,33 @@ using System.Collections.Generic;
 using Vim;
 using Vim.Extensions;
 
-public DTE2 GetDTE2()
+public class Util
 {
-    return Package.GetGlobalService(typeof(DTE)) as DTE2;
+    public static DTE2 GetDTE2()
+    {
+        return Package.GetGlobalService(typeof(DTE)) as DTE2;
+    }
 }
-public void DisplayError(string input)
+
+public static void DisplayError(this IVim vim, string input)
 {
-    Vim.ActiveStatusUtil.OnError(input);
+    vim.ActiveStatusUtil.OnError(input);
 }
-public void DisplayStatus(string input)
+public static void DisplayStatus(this IVim vim, string input)
 {
-    Vim.ActiveStatusUtil.OnStatus(input);
+    vim.ActiveStatusUtil.OnStatus(input);
 }
-public void DisplayStatusLong(IEnumerable<string> value)
+public static void DisplayStatusLong(this IVim vim, IEnumerable<string> value)
 {
-    Vim.ActiveStatusUtil.OnStatusLong(value);
+    vim.ActiveStatusUtil.OnStatusLong(value);
 }
-public void DisplayWarning(string input)
+public static void DisplayWarning(this IVim vim, string input)
 {
-    Vim.ActiveStatusUtil.OnWarning(input);
+    vim.ActiveStatusUtil.OnWarning(input);
 }
-public bool TryGetActiveVimBuffer(out IVimBuffer vimBuffer)
+public static bool TryGetActiveVimBuffer(this IVim vim, out IVimBuffer vimBuffer)
 {
-    var activeVimBuffer = Vim.ActiveBuffer;
+    var activeVimBuffer = vim.ActiveBuffer;
     if (activeVimBuffer.IsNone())
     {
         vimBuffer = null;
@@ -38,7 +42,7 @@ public bool TryGetActiveVimBuffer(out IVimBuffer vimBuffer)
     vimBuffer = activeVimBuffer.Value;
     return true;
 }
-public bool TryGetWpfTextView(IVimBuffer vimBuffer, out IWpfTextView textView)
+public static bool TryGetWpfTextView(this IVimBuffer vimBuffer, out IWpfTextView textView)
 {
     textView = vimBuffer?.TextView as IWpfTextView;
     if (textView == null)
@@ -47,11 +51,11 @@ public bool TryGetWpfTextView(IVimBuffer vimBuffer, out IWpfTextView textView)
     }
     return true;
 }
-public void Process(IVimBuffer vimBuffer, KeyInput keyInput)
+public static void Process(this IVimBuffer vimBuffer, KeyInput keyInput)
 {
     vimBuffer.ProcessFromScript(keyInput);
 }
-public void Process(IVimBuffer vimBuffer, string input, bool enter = false)
+public static void Process(this IVimBuffer vimBuffer, string input, bool enter = false)
 {
     foreach (var c in input)
     {

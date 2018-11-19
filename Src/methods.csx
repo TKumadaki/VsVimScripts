@@ -6,7 +6,7 @@ using System.Collections.Generic;
 var funcList = new List<string>();
 string funcInfo;
 
-var DTE = GetDTE2();
+var DTE = Util.GetDTE2();
 
 FileCodeModel fcm = DTE.ActiveDocument.ProjectItem.FileCodeModel as FileCodeModel;
 if (fcm == null)
@@ -39,5 +39,5 @@ foreach (CodeElement element in fcm.CodeElements)
 if (funcList.Count == 0)
     return;
 
-DisplayStatusLong(funcList.ToArray());
+Vim.DisplayStatusLong(funcList.ToArray());
 

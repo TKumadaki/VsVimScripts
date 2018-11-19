@@ -17,13 +17,13 @@ const string VirtualFolder = "{6BB5F8F0-4483-11D3-8BCF-00C04F8EC28C}";  //GUID_I
 
 IVimBuffer vimBuffer;
 
-if (!TryGetActiveVimBuffer(out vimBuffer))
+if (!Vim.TryGetActiveVimBuffer(out vimBuffer))
 {
-    DisplayError("Can not get VimBuffer");
+    Vim.DisplayError("Can not get VimBuffer");
     return;
 }
 
-var DTE = GetDTE2();
+var DTE = Util.GetDTE2();
 
 UIHierarchy solutionExplorer = DTE.ToolWindows.SolutionExplorer;
 
@@ -598,18 +598,18 @@ public void InterceptEnd()
     vimBuffer.Closed -= OnBufferClosed;
     currentVimMode = null;
     messageAction = null;
-    DisplayStatus(string.Empty);
+    Vim.DisplayStatus(string.Empty);
     solutionExplorer.Parent.AutoHides = autoHides;
 }
 private void SwitchExitMode()
 {
-    messageAction = () => DisplayStatus("Do you want to exit? (y/n)");
+    messageAction = () => Vim.DisplayStatus("Do you want to exit? (y/n)");
     messageAction.Invoke();
     currentVimMode = exitMode;
 }
 private void SwitchDeleteMode(string fileName)
 {
-    messageAction = () => DisplayStatus($"delete {fileName}? (y/n)");
+    messageAction = () => Vim.DisplayStatus($"delete {fileName}? (y/n)");
     messageAction.Invoke();
     currentVimMode = deleteMode;
 }
@@ -617,7 +617,7 @@ private void SwitchNormalMode(bool swichMessage)
 {
     if (swichMessage)
     {
-        messageAction = () => DisplayStatus("-- SOLUTION EXPLORER OPERATION MODE --");
+        messageAction = () => Vim.DisplayStatus("-- SOLUTION EXPLORER OPERATION MODE --");
     }
     messageAction?.Invoke();
     currentVimMode = normalMode;
@@ -625,7 +625,7 @@ private void SwitchNormalMode(bool swichMessage)
 private void SwitchSearchMode(bool forward)
 {
     searchMode.Buffer = string.Empty;
-    messageAction = () => DisplayStatus($":{(forward ? "/" : "?")}{searchMode.Buffer}");
+    messageAction = () => Vim.DisplayStatus($":{(forward ? "/" : "?")}{searchMode.Buffer}");
     messageAction.Invoke();
 
     currentSearchForward = forward;
@@ -634,7 +634,7 @@ private void SwitchSearchMode(bool forward)
 private void SwitchIncrementalSearchMode(bool forward)
 {
     incrementalSearchMode.Buffer = string.Empty;
-    messageAction = () => DisplayStatus($"{(forward ? "/" : "?")}{incrementalSearchMode.Buffer}");
+    messageAction = () => Vim.DisplayStatus($"{(forward ? "/" : "?")}{incrementalSearchMode.Buffer}");
     messageAction.Invoke();
 
     currentSearchForward = forward;
@@ -644,14 +644,14 @@ private void Search(string keyword, UIHierarchy solutionExplorer, object startIt
 {
     if (string.IsNullOrWhiteSpace(keyword))
     {
-        messageAction = () => DisplayStatus("nothing keyword.");
+        messageAction = () => Vim.DisplayStatus("nothing keyword.");
         SwitchNormalMode(swichMessage: false);
         return;
     }
 
     if (solutionExplorer.UIHierarchyItems.CountEx() == 0)
     {
-        messageAction = () => DisplayStatus("solution item 0.");
+        messageAction = () => Vim.DisplayStatus("solution item 0.");
         SwitchNormalMode(swichMessage: false);
         return;
     }
@@ -663,7 +663,7 @@ private void Search(string keyword, UIHierarchy solutionExplorer, object startIt
 
     if (searchList.Count == 0)
     {
-        messageAction = () => DisplayStatus("search item 0.");
+        messageAction = () => Vim.DisplayStatus("search item 0.");
         SwitchNormalMode(swichMessage: false);
         return;
     }
@@ -703,7 +703,7 @@ private void Search(string keyword, UIHierarchy solutionExplorer, object startIt
 
     if (index < 0)
     {
-        messageAction = () => DisplayStatus("not found.");
+        messageAction = () => Vim.DisplayStatus("not found.");
     }
     else
     {

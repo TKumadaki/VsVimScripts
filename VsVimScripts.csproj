@@ -34,13 +34,10 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Src\bookmark.csx" />
     <None Include="Src\calledcount.csx" />
     <None Include="Src\findresults.csx" />
     <None Include="Src\methods.csx" />
     <None Include="Src\scroll.csx" />
-    <None Include="Src\selectionmove.csx" />
-    <None Include="Src\simplesurround.csx" />
     <None Include="Src\solution.csx" />
     <None Include="Src\tasklist.csx" />
     <None Include="Src\tinyvim.csx" />
