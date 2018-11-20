@@ -35,6 +35,7 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="Src\calledcount.csx" />
+    <None Include="Src\find.csx" />
     <None Include="Src\findresults.csx" />
     <None Include="Src\methods.csx" />
     <None Include="Src\scroll.csx" />
