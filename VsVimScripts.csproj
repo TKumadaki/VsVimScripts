@@ -37,6 +37,7 @@
     <None Include="Src\calledcount.csx" />
     <None Include="Src\find.csx" />
     <None Include="Src\findresults.csx" />
+    <None Include="Src\findresultswindow.csx" />
     <None Include="Src\methods.csx" />
     <None Include="Src\scroll.csx" />
     <None Include="Src\solution.csx" />

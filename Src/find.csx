@@ -1,8 +1,9 @@
 ﻿#load "util.csx"
 #load "tinyvim.csx"
-//#load "findresults.csx"
+#load "findresultswindow.csx"
 
 using EnvDTE;
+using EnvDTE80;
 using Microsoft.VisualStudio.Text;
 using System;
 using System.Linq;
@@ -20,6 +21,7 @@ if (!Vim.TryGetActiveVimBuffer(out vimBuffer))
     return;
 }
 var DTE = Util.GetDTE2();
+
 
 /* Input Mode */
 Action messageAction = null;
@@ -49,9 +51,10 @@ inputEnterCp.CommandEquals = (x) =>
 };
 inputEnterCp.CommandAction = (x) =>
 {
-    Find(inputMode.Buffer);
+    FindStart(inputMode.Buffer);
     InterceptEnd();
-    //TODO:検索窓を開く
+    var frw = new FindResultsWindow(Vim);
+    frw.Display();
 };
 
 messageAction = () => Vim.DisplayStatus($"keyword?:{inputMode.Buffer}");
@@ -60,25 +63,49 @@ messageAction.Invoke();
 vimBuffer.KeyInputStart += OnKeyInputStart;
 vimBuffer.Closed += OnBufferClosed;
 
-public void Find(string searchKeyword)
+public void FindStart(string searchKeyword)
 {
-    var objFind = DTE.Find;
-    objFind.Action = vsFindAction.vsFindActionFindAll;
-    objFind.Backwards = false;
-    objFind.FilesOfType = "*.*";
-    objFind.FindWhat = searchKeyword;
-    //objFind.KeepModifiedDocumentsOpen = True
-    objFind.MatchCase = false;
-    objFind.MatchInHiddenText = false;
-    objFind.MatchWholeWord = false;
-    objFind.PatternSyntax = vsFindPatternSyntax.vsFindPatternSyntaxRegExpr;
-    //objFind.ReplaceWith = "NEW THING";
-    objFind.ResultsLocation = vsFindResultsLocation.vsFindResults1;
-    //objFind.SearchPath = "c:    emp";
-    objFind.SearchSubfolders = true;
-    objFind.Target = vsFindTarget.vsFindTargetSolution;
-    objFind.Execute();
+    var find = DTE.Find;
+
+    find.Action = vsFindAction.vsFindActionFindAll;
+    find.Backwards = false;
+    find.FilesOfType = "*.*";
+    find.FindWhat = searchKeyword;
+    //find.KeepModifiedDocumentsOpen = True
+    find.MatchCase = false;
+    find.MatchInHiddenText = false;
+    find.MatchWholeWord = false;
+    find.PatternSyntax = vsFindPatternSyntax.vsFindPatternSyntaxRegExpr;
+    //find.ReplaceWith = "NEW THING";
+    find.ResultsLocation = vsFindResultsLocation.vsFindResults1;
+    //find.SearchPath = "c:    emp";
+    find.SearchSubfolders = true;
+    find.Target = vsFindTarget.vsFindTargetSolution;
+
+    //////Add Event
+    //var m_findEvents = DTE.Events.FindEvents;
+    //var fe = new FindEvent(DTE);
+    //m_findEvents.FindDone += new EnvDTE._dispFindEvents_FindDoneEventHandler(fe.FindEvents_FindDone);
+    ////Vim.DisplayStatus("FindDone");
+
+    find.Execute();
 }
+//public class FindEvent
+//{
+//    private DTE2 dte;
+//    public FindEvent(DTE2 dte)
+//    {
+//        this.dte = dte;
+//    }
+//    public void FindEvents_FindDone(EnvDTE.vsFindResult Result, bool Cancelled)
+//    {
+//        //Vim.DisplayStatus("Events");
+//        ////DTE.Events.FindEvents.FindDone -= FindEvents_FindDone;
+//        //var frw = new FindResultsWindow(Vim);
+//        //frw.Display();
+//        dte.ActiveDocument.Activate();
+//    }
+//}
 public void OnKeyInputStart(object sender, KeyInputStartEventArgs e)
 {
     e.Handled = true;
