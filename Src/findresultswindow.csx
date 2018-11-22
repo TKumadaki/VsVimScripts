@@ -72,20 +72,20 @@ public class FindResultsWindow
         }
         else if (e.KeyInput.Key == VimKey.Enter)
         {
-            InterceptEnd();
+            EndIntercept();
             findResultsWindow.Activate();
         }
         else if (e.KeyInput.Key == VimKey.Escape)
         {
-            InterceptEnd();
+            EndIntercept();
         }
         //messageAction?.Invoke();
     }
     public void OnBufferClosed(object sender, EventArgs e)
     {
-        InterceptEnd();
+        EndIntercept();
     }
-    public void InterceptEnd()
+    public void EndIntercept()
     {
         vimBuffer.KeyInputStart -= OnKeyInputStart;
         vimBuffer.Closed -= OnBufferClosed;

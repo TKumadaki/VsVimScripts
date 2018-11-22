@@ -21,7 +21,7 @@ if (!Vim.TryGetActiveVimBuffer(out vimBuffer))
     return;
 }
 var DTE = Util.GetDTE2();
-
+var findEvents = DTE.Events.FindEvents;
 
 /* Input Mode */
 Action messageAction = null;
@@ -38,7 +38,7 @@ inputEscapeCp.CommandEquals = (x) =>
 };
 inputEscapeCp.CommandAction = (x) =>
 {
-    InterceptEnd();
+    EndIntercept();
 };
 
 //Input Mode:Enter Command
@@ -51,10 +51,8 @@ inputEnterCp.CommandEquals = (x) =>
 };
 inputEnterCp.CommandAction = (x) =>
 {
-    FindStart(inputMode.Buffer);
-    InterceptEnd();
-    var frw = new FindResultsWindow(Vim);
-    frw.Display();
+    EndIntercept();
+    FindExecute(inputMode.Buffer);
 };
 
 messageAction = () => Vim.DisplayStatus($"keyword?:{inputMode.Buffer}");
@@ -63,7 +61,7 @@ messageAction.Invoke();
 vimBuffer.KeyInputStart += OnKeyInputStart;
 vimBuffer.Closed += OnBufferClosed;
 
-public void FindStart(string searchKeyword)
+public void FindExecute(string searchKeyword)
 {
     var find = DTE.Find;
 
@@ -82,30 +80,18 @@ public void FindStart(string searchKeyword)
     find.SearchSubfolders = true;
     find.Target = vsFindTarget.vsFindTargetSolution;
 
-    //////Add Event
-    //var m_findEvents = DTE.Events.FindEvents;
-    //var fe = new FindEvent(DTE);
-    //m_findEvents.FindDone += new EnvDTE._dispFindEvents_FindDoneEventHandler(fe.FindEvents_FindDone);
-    ////Vim.DisplayStatus("FindDone");
+    var frw = new FindResultsWindow(Vim);
+    frw.Display();
 
+    findEvents.FindDone += FindDone;
     find.Execute();
 }
-//public class FindEvent
-//{
-//    private DTE2 dte;
-//    public FindEvent(DTE2 dte)
-//    {
-//        this.dte = dte;
-//    }
-//    public void FindEvents_FindDone(EnvDTE.vsFindResult Result, bool Cancelled)
-//    {
-//        //Vim.DisplayStatus("Events");
-//        ////DTE.Events.FindEvents.FindDone -= FindEvents_FindDone;
-//        //var frw = new FindResultsWindow(Vim);
-//        //frw.Display();
-//        dte.ActiveDocument.Activate();
-//    }
-//}
+public void FindDone(EnvDTE.vsFindResult result, bool cancelled)
+{
+    findEvents.FindDone -= FindDone;
+    findEvents = null;
+    DTE.ActiveDocument.Activate();
+}
 public void OnKeyInputStart(object sender, KeyInputStartEventArgs e)
 {
     e.Handled = true;
@@ -115,9 +101,9 @@ public void OnKeyInputStart(object sender, KeyInputStartEventArgs e)
 }
 public void OnBufferClosed(object sender, EventArgs e)
 {
-    InterceptEnd();
+    EndIntercept();
 }
-public void InterceptEnd()
+public void EndIntercept()
 {
     vimBuffer.KeyInputStart -= OnKeyInputStart;
     vimBuffer.Closed -= OnBufferClosed;

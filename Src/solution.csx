@@ -54,7 +54,7 @@ aCp.CommandEquals = (x) =>
 aCp.CommandAction = (x) =>
 {
     normalMode.Buffer = string.Empty;
-    InterceptEnd();
+    EndIntercept();
     DTE.ExecuteCommand("View.SolutionExplorer");
     DTE.ExecuteCommand("Project.AddNewItem");
 };
@@ -348,7 +348,7 @@ rCp.CommandEquals = (x) =>
 rCp.CommandAction = (x) =>
 {
     normalMode.Buffer = string.Empty;
-    InterceptEnd();
+    EndIntercept();
     DTE.ExecuteCommand("View.SolutionExplorer");
     DTE.ExecuteCommand("File.Rename");
 };
@@ -391,7 +391,7 @@ escapeCp.CommandEquals = (x) =>
 };
 escapeCp.CommandAction = (x) =>
 {
-    InterceptEnd();
+    EndIntercept();
     //SwitchExitMode();
 };
 
@@ -410,7 +410,7 @@ enterCp.CommandAction = (x) =>
     ProjectItem pi = GetSelectedProjectItem();
     if (pi != null && (pi.Kind == PhysicalFile || pi.Kind == SolutionItem))
     {
-        InterceptEnd();
+        EndIntercept();
     }
     solutionExplorer.DoDefaultAction();
 };
@@ -552,7 +552,7 @@ exitYesCp.CommandEquals = (x) =>
 };
 exitYesCp.CommandAction = (x) =>
 {
-    InterceptEnd();
+    EndIntercept();
 };
 
 //Exit Mode:no
@@ -590,9 +590,9 @@ public void OnKeyInputStart(object sender, KeyInputStartEventArgs e)
 }
 public void OnBufferClosed(object sender, EventArgs e)
 {
-    InterceptEnd();
+    EndIntercept();
 }
-public void InterceptEnd()
+public void EndIntercept()
 {
     vimBuffer.KeyInputStart -= OnKeyInputStart;
     vimBuffer.Closed -= OnBufferClosed;

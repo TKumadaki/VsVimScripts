@@ -55,17 +55,17 @@ private void OnKeyInputStart(object sender, KeyInputStartEventArgs e)
         var point = new SnapshotPoint(textView.TextSnapshot, snapshotLine.Start.Position);
         textView.Caret.MoveTo(new SnapshotPoint(textView.TextSnapshot, point));
 
-        InterceptEnd();
+        EndIntercept();
         return;
     }
 }
-private void InterceptEnd()
+private void EndIntercept()
 {
     vimBuffer.KeyInputStart -= OnKeyInputStart;
     vimBuffer.Closed -= OnBufferClosed;
 }
 private void OnBufferClosed(object sender, EventArgs e)
 {
-    InterceptEnd();
+    EndIntercept();
 }
 
