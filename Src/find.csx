@@ -55,7 +55,7 @@ inputEnterCp.CommandAction = (x) =>
     FindExecute(inputMode.Buffer);
 };
 
-messageAction = () => Vim.DisplayStatus($"keyword?:{inputMode.Buffer}");
+messageAction = () => Vim.DisplayStatus($"FindWhat?:{inputMode.Buffer}");
 messageAction.Invoke();
 
 vimBuffer.KeyInputStart += OnKeyInputStart;
