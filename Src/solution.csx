@@ -704,6 +704,7 @@ private void Search(string keyword, UIHierarchy solutionExplorer, object startIt
     if (index < 0)
     {
         messageAction = () => Vim.DisplayStatus("not found.");
+        switchNormalMode = true;
     }
     else
     {
