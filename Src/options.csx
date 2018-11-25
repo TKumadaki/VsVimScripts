@@ -27,7 +27,7 @@ public class Options
 
     public void Parse(string argString)
     {
-        var args = argString.Split(' ').Select((x) => x = x.Trim()).ToArray();
+        var args = argString.Split(' ').Select((x) => x = x.Trim()).Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
         string val;
 
         foreach (var opt in mOptionList)
