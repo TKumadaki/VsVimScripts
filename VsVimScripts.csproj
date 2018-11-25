@@ -39,6 +39,7 @@
     <None Include="Src\findresults.csx" />
     <None Include="Src\findresultswindow.csx" />
     <None Include="Src\methods.csx" />
+    <None Include="Src\options.csx" />
     <None Include="Src\scroll.csx" />
     <None Include="Src\solution.csx" />
     <None Include="Src\tasklist.csx" />
