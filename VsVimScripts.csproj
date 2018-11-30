@@ -41,6 +41,8 @@
     <None Include="Src\methods.csx" />
     <None Include="Src\options.csx" />
     <None Include="Src\scroll.csx" />
+    <None Include="Src\selectionmove.csx" />
+    <None Include="Src\simplesurround.csx" />
     <None Include="Src\solution.csx" />
     <None Include="Src\tasklist.csx" />
     <None Include="Src\tinyvim.csx" />
