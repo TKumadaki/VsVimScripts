@@ -69,9 +69,19 @@ public class FindResultsWindow
 
         findResultsWindow.AutoHides = false;
         findResultsWindow.Activate();
+
+        Select();
         DTE.ActiveDocument.Activate();
     }
-
+    public void Select()
+    {
+        ITextSnapshotLine line = wpfTextView.Caret.Position.BufferPosition.GetContainingLine();
+        if (line.LineNumber <= 1 && 3 <= wpfTextView.TextSnapshot.LineCount)
+        {
+            line = wpfTextView.TextSnapshot.GetLineFromLineNumber(1);
+            textView.SetSelection(1, line.End, 1, 0);
+        }
+    }
     public void OnKeyInputStart(object sender, KeyInputStartEventArgs e)
     {
         e.Handled = true;
@@ -80,23 +90,25 @@ public class FindResultsWindow
 
         if (e.KeyInput.Char == 'j')
         {
-            line = wpfTextView.Caret.Position.BufferPosition.GetContainingLine();
-            if (line.LineNumber < (wpfTextView.TextSnapshot.LineCount - 2))
+            line = wpfTextView.Selection.SelectedSpans[0].Start.GetContainingLine();
+            if (line.LineNumber < (wpfTextView.TextSnapshot.LineCount - 3))
             {
                 lineNumber = line.LineNumber + 1;
                 //Start from the end.
                 //Do not move horizontally.
+                line = wpfTextView.TextSnapshot.GetLineFromLineNumber(1);
                 textView.SetSelection(lineNumber, line.End, lineNumber, 0);
             }
         }
         else if (e.KeyInput.Char == 'k')
         {
-            line = wpfTextView.Caret.Position.BufferPosition.GetContainingLine();
-            if (2 < line.LineNumber)
+            line = wpfTextView.Selection.SelectedSpans[0].Start.GetContainingLine();
+            if (1 < line.LineNumber)
             {
                 lineNumber = line.LineNumber - 1;
                 //Start from the end.
                 //Do not move horizontally.
+                line = wpfTextView.TextSnapshot.GetLineFromLineNumber(1);
                 textView.SetSelection(lineNumber, line.End, lineNumber, 0);
             }
         }

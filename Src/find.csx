@@ -24,6 +24,7 @@ if (!Vim.TryGetActiveVimBuffer(out vimBuffer))
 var DTE = Util.GetDTE2();
 var findEvents = DTE.Events.FindEvents;
 static Options findOptions;
+FindResultsWindow frw = null;
 InitilizeFindOptions(ref findOptions);
 
 /* Input Mode */
@@ -61,7 +62,7 @@ inputEnterCp.CommandAction = (x) =>
     messageAction = () =>
     {
         var lst = findOptions.DescriptionsAndValues().ToList<string>();
-        lst.Insert(0, $"Options?:{optionsMode.Buffer}");
+        lst.Insert(0, $"Options:{optionsMode.Buffer}");
         Vim.DisplayStatusLong(lst);
     };
     currentMode = optionsMode;
@@ -99,7 +100,7 @@ optionsEnterCp.CommandAction = (x) =>
 };
 
 
-messageAction = () => Vim.DisplayStatusLong(new string[] { $"FindWhat?:{inputMode.Buffer}" });
+messageAction = () => Vim.DisplayStatusLong(new string[] { $"FindWhat:{inputMode.Buffer}" });
 messageAction.Invoke();
 
 vimBuffer.KeyInputStart += OnKeyInputStart;
@@ -124,7 +125,7 @@ public void FindExecute(string searchKeyword)
     find.SearchSubfolders = (bool)findOptions["-SearchSubfolders"];
     find.Target = (vsFindTarget)findOptions["-Target"];
 
-    var frw = new FindResultsWindow(Vim);
+    frw = new FindResultsWindow(Vim);
     frw.Display();
 
     findEvents.FindDone += FindDone;
@@ -134,6 +135,9 @@ public void FindDone(EnvDTE.vsFindResult result, bool cancelled)
 {
     findEvents.FindDone -= FindDone;
     findEvents = null;
+
+    frw.Select();
+
     DTE.ActiveDocument.Activate();
 }
 public void OnKeyInputStart(object sender, KeyInputStartEventArgs e)
