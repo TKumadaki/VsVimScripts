@@ -25,6 +25,7 @@ public class FindResultsWindow
     private Window findResultsWindow;
     private bool autoHides = true;
     private IVim vim;
+    private IVsTextView textView;
     private IWpfTextView wpfTextView;
 
     public FindResultsWindow(IVim vim)
@@ -52,7 +53,7 @@ public class FindResultsWindow
         object docView;
         windowFrame.GetProperty((int)__VSFPROPID.VSFPROPID_DocView, out docView);
 
-        var textView = docView as IVsTextView;
+        textView = docView as IVsTextView;
 
         IComponentModel componentModel = Package.GetGlobalService(typeof(SComponentModel)) as IComponentModel;
         var factory = componentModel.GetService<IVsEditorAdaptersFactoryService>();
@@ -74,22 +75,29 @@ public class FindResultsWindow
     public void OnKeyInputStart(object sender, KeyInputStartEventArgs e)
     {
         e.Handled = true;
-        EnvDTE.TextSelection selection;
+        ITextSnapshotLine line;
+        int lineNumber;
 
         if (e.KeyInput.Char == 'j')
         {
-            selection = findResultsWindow.Selection as EnvDTE.TextSelection;
-            if (selection != null && (selection.CurrentLine < (wpfTextView.TextSnapshot.LineCount - 2)))
+            line = wpfTextView.Caret.Position.BufferPosition.GetContainingLine();
+            if (line.LineNumber < (wpfTextView.TextSnapshot.LineCount - 2))
             {
-                selection.GotoLine(selection.CurrentLine + 1, true);
+                lineNumber = line.LineNumber + 1;
+                //Start from the end.
+                //Do not move horizontally.
+                textView.SetSelection(lineNumber, line.End, lineNumber, 0);
             }
         }
         else if (e.KeyInput.Char == 'k')
         {
-            selection = findResultsWindow.Selection as EnvDTE.TextSelection;
-            if (selection != null && 2 < selection.CurrentLine)
+            line = wpfTextView.Caret.Position.BufferPosition.GetContainingLine();
+            if (2 < line.LineNumber)
             {
-                selection.GotoLine(selection.CurrentLine - 1, true);
+                lineNumber = line.LineNumber - 1;
+                //Start from the end.
+                //Do not move horizontally.
+                textView.SetSelection(lineNumber, line.End, lineNumber, 0);
             }
         }
         else if (e.KeyInput.Key == VimKey.Enter)
