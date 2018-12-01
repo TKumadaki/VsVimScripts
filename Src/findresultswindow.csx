@@ -96,7 +96,7 @@ public class FindResultsWindow
                 lineNumber = line.LineNumber + 1;
                 //Start from the end.
                 //Do not move horizontally.
-                line = wpfTextView.TextSnapshot.GetLineFromLineNumber(1);
+                line = wpfTextView.TextSnapshot.GetLineFromLineNumber(lineNumber);
                 textView.SetSelection(lineNumber, line.End, lineNumber, 0);
             }
         }
@@ -108,7 +108,7 @@ public class FindResultsWindow
                 lineNumber = line.LineNumber - 1;
                 //Start from the end.
                 //Do not move horizontally.
-                line = wpfTextView.TextSnapshot.GetLineFromLineNumber(1);
+                line = wpfTextView.TextSnapshot.GetLineFromLineNumber(lineNumber);
                 textView.SetSelection(lineNumber, line.End, lineNumber, 0);
             }
         }
