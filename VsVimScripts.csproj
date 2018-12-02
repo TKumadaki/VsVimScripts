@@ -34,22 +34,22 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Src\calledcount.csx" />
-    <None Include="Src\find.csx" />
+    <None Include="Src\CalledCount.csx" />
+    <None Include="Src\FindAll.csx" />
     <None Include="Src\FindAllReferences.csx" />
     <None Include="Src\FindAllReferencesResults.csx" />
     <None Include="Src\FindAllReferencesWindow.csx" />
-    <None Include="Src\findresults.csx" />
-    <None Include="Src\findresultswindow.csx" />
-    <None Include="Src\methods.csx" />
-    <None Include="Src\options.csx" />
-    <None Include="Src\scroll.csx" />
-    <None Include="Src\selectionmove.csx" />
-    <None Include="Src\simplesurround.csx" />
-    <None Include="Src\solution.csx" />
-    <None Include="Src\tasklist.csx" />
-    <None Include="Src\tinyvim.csx" />
-    <None Include="Src\util.csx" />
+    <None Include="Src\FindResults.csx" />
+    <None Include="Src\FindResultsWindow.csx" />
+    <None Include="Src\Methods.csx" />
+    <None Include="Src\Options.csx" />
+    <None Include="Src\Scroll.csx" />
+    <None Include="Src\SelectionMove.csx" />
+    <None Include="Src\SimpleSurround.csx" />
+    <None Include="Src\Solution.csx" />
+    <None Include="Src\Tasklist.csx" />
+    <None Include="Src\TinyVim.csx" />
+    <None Include="Src\Util.csx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="License.txt" />
