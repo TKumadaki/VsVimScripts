@@ -36,6 +36,9 @@
     <None Include="App.config" />
     <None Include="Src\calledcount.csx" />
     <None Include="Src\find.csx" />
+    <None Include="Src\FindAllReferences.csx" />
+    <None Include="Src\FindAllReferencesResults.csx" />
+    <None Include="Src\FindAllReferencesWindow.csx" />
     <None Include="Src\findresults.csx" />
     <None Include="Src\findresultswindow.csx" />
     <None Include="Src\methods.csx" />
