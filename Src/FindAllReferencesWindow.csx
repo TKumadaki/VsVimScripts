@@ -15,18 +15,18 @@ using System.Windows.Input;
 public class FindAllReferencesWindow
 {
     //This guid is not documented
-    const string guidFindAllReferencesWindow = "{A80FEBB4-E7E0-4147-B476-21AAF2453969}";
+    private const string guidFindAllReferencesWindow = "{A80FEBB4-E7E0-4147-B476-21AAF2453969}";
 
-    IVimBuffer vimBuffer;
+    private IVimBuffer vimBuffer;
     private Window findAllReferencesWindow;
     private bool autoHides = true;
     private IVim vim;
-    private DTE2 DTE;
+    private DTE2 dte;
 
     public FindAllReferencesWindow(IVim vim)
     {
         this.vim = vim;
-        this.DTE = Util.GetDTE2();
+        this.dte = Util.GetDTE2();
     }
 
     public void Display()
@@ -37,7 +37,7 @@ public class FindAllReferencesWindow
             return;
         }
 
-        findAllReferencesWindow = DTE.Windows.Item(guidFindAllReferencesWindow);
+        findAllReferencesWindow = dte.Windows.Item(guidFindAllReferencesWindow);
         autoHides = true;
 
         //Action messageAction = null;
@@ -50,7 +50,7 @@ public class FindAllReferencesWindow
         findAllReferencesWindow.AutoHides = false;
         findAllReferencesWindow.Activate();
 
-        DTE.ActiveDocument.Activate();
+        dte.ActiveDocument.Activate();
     }
 
     public void OnKeyInputStart(object sender, KeyInputStartEventArgs e)
@@ -65,7 +65,7 @@ public class FindAllReferencesWindow
             };
             findAllReferencesWindow.Activate();
             InputManager.Current.ProcessInput(args);
-            DTE.ActiveDocument.Activate();
+            dte.ActiveDocument.Activate();
         }
         else if (e.KeyInput.Char == 'k')
         {
@@ -75,7 +75,7 @@ public class FindAllReferencesWindow
             };
             findAllReferencesWindow.Activate();
             InputManager.Current.ProcessInput(args);
-            DTE.ActiveDocument.Activate();
+            dte.ActiveDocument.Activate();
         }
         else if (e.KeyInput.Key == VimKey.Enter)
         {
