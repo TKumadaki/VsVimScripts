@@ -34,6 +34,8 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="README.ja.md" />
+    <None Include="README.md" />
     <None Include="Src\CalledCount.csx" />
     <None Include="Src\FindAll.csx" />
     <None Include="Src\FindAllReferences.csx" />
