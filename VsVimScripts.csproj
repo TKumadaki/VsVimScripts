@@ -34,6 +34,10 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Documentation\ScriptFiles.ja.md" />
+    <None Include="Documentation\ScriptFiles.md" />
+    <None Include="Documentation\Solution.ja.md" />
+    <None Include="Documentation\Solution.md" />
     <None Include="README.ja.md" />
     <None Include="README.md" />
     <None Include="Src\CalledCount.csx" />
