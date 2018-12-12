@@ -30,6 +30,6 @@ SimpleSurround.csxなどを使用する時、ユーザーはコマンドマー�
 - SelectionMove.csx
 - SimpleSurround.csx
 - [Solution.csx](Solution.ja.md)
-- Tasklist.csx
+- [Tasklist.csx](TaskList.ja.md)
 - TinyVim.csx
 - Util.csx

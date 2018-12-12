@@ -30,6 +30,6 @@ This is because methods that manipulate command margins are not exposed.
 - SelectionMove.csx
 - SimpleSurround.csx
 - [Solution.csx](Solution.md)
-- Tasklist.csx
+- [Tasklist.csx](TaskList.md)
 - TinyVim.csx
 - Util.csx
