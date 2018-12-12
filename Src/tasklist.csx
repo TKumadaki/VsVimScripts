@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 using Vim;
 using Vim.Extensions;
 using System.Windows.Input;
+using System.Reflection;
 
 const string vsWindowKindTaskList = "{4A9B7E51-AA16-11D0-A8C5-00A0C921A4D2}";
 
@@ -24,11 +25,7 @@ if (!Vim.TryGetActiveVimBuffer(out vimBuffer))
 var DTE = Util.GetDTE2();
 
 Window taskListWindow = DTE.Windows.Item(vsWindowKindTaskList);
-TaskList taskList = taskListWindow.Object as TaskList;
 bool autoHides = true;
-int selectedIndex = 1;
-
-//Action messageAction = null;
 
 vimBuffer.KeyInputStart += OnKeyInputStart;
 vimBuffer.Closed += OnBufferClosed;
@@ -38,9 +35,10 @@ autoHides = taskListWindow.AutoHides;
 taskListWindow.AutoHides = false;
 taskListWindow.Activate();
 
-if (taskList != null && 0 < taskList.TaskItems.Count)
+var taskList = taskListWindow.Object as TaskList;
+if (taskList != null && 0 < taskList.TaskItems.Count && GetSelectedIndex() == -1)
 {
-    taskList.TaskItems.Item(selectedIndex).Select();
+    taskList.TaskItems.Item(1).Select();
 }
 DTE.ActiveDocument.Activate();
 
@@ -48,16 +46,11 @@ public void OnKeyInputStart(object sender, KeyInputStartEventArgs e)
 {
     e.Handled = true;
 
+    var taskList = taskListWindow.Object as TaskList;
     if (e.KeyInput.Char == 'j')
     {
-        //if (taskList != null && selectedIndex < taskList.TaskItems.Count)
-        //{
-        //    selectedIndex++;
-        //    taskList.TaskItems.Item(selectedIndex).Select();
-        //}
-        if (taskList != null && selectedIndex < taskList.TaskItems.Count)
+        if (taskList != null && 0 < taskList.TaskItems.Count && GetSelectedIndex() < taskList.TaskItems.Count)
         {
-            selectedIndex++;
             var args = new KeyEventArgs(Keyboard.PrimaryDevice, Keyboard.PrimaryDevice.ActiveSource, 0, Key.Down)
             {
                 RoutedEvent = Keyboard.KeyDownEvent
@@ -69,15 +62,8 @@ public void OnKeyInputStart(object sender, KeyInputStartEventArgs e)
     }
     else if (e.KeyInput.Char == 'k')
     {
-        //if (taskList != null && 1 < selectedIndex)
-        //{
-        //    selectedIndex--;
-        //    taskList.TaskItems.Item(selectedIndex).Select();
-        //}
-
-        if (taskList != null && 1 < selectedIndex)
+        if (taskList != null && 0 < taskList.TaskItems.Count && 0 < GetSelectedIndex())
         {
-            selectedIndex--;
             var args = new KeyEventArgs(Keyboard.PrimaryDevice, Keyboard.PrimaryDevice.ActiveSource, 0, Key.Up)
             {
                 RoutedEvent = Keyboard.KeyDownEvent
@@ -97,6 +83,45 @@ public void OnKeyInputStart(object sender, KeyInputStartEventArgs e)
         EndIntercept();
     }
     //messageAction?.Invoke();
+}
+public int GetSelectedIndex()
+{
+    int index = -1;
+    Type t;
+    var taskList = taskListWindow.Object as TaskList;
+    if (taskList == null)
+    {
+        return index;
+    }
+    t = taskList.GetType();
+    var tableControl = t.InvokeMember("TableControl",
+                BindingFlags.GetProperty | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance,
+                null,
+                taskList,
+                null);
+    if (tableControl == null)
+    {
+        return index;
+    }
+    t = tableControl.GetType();
+    var controlViewModel = t.InvokeMember("ControlViewModel",
+                BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.GetField,
+                null,
+                tableControl,
+                null);
+    if (controlViewModel == null)
+    {
+        return index;
+    }
+    t = controlViewModel.GetType();
+    index = (int)t.InvokeMember("SelectedIndex",
+                BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.GetProperty,
+                null,
+                controlViewModel,
+                null);
+
+    //Vim.DisplayStatus(index.ToString());
+    return index;
 }
 public void OnBufferClosed(object sender, EventArgs e)
 {
