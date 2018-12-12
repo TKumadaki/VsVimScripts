@@ -21,15 +21,20 @@ This is because methods that manipulate command margins are not exposed.
 - FindAll.csx
 - FindAllReferences.csx
 - FindAllReferencesResults.csx
-- FindAllReferencesWindow.csx
+- FindAllReferencesWindow.csx  
+  This script does not work on its own
 - FindResults.csx
-- FindResultsWindow.csx
+- FindResultsWindow.csx  
+  This script does not work on its own
 - Methods.csx
-- Options.csx
+- Options.csx  
+  This script does not work on its own
 - Scroll.csx
 - SelectionMove.csx
 - SimpleSurround.csx
 - [Solution.csx](Solution.md)
 - [Tasklist.csx](TaskList.md)
-- TinyVim.csx
-- Util.csx
+- TinyVim.csx  
+  This script does not work on its own
+- Util.csx  
+  This script does not work on its own
