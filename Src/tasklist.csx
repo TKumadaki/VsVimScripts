@@ -157,6 +157,25 @@ public void SetSelectedIndex(int index)
                 controlViewModel,
                 new object[] { index});
 
+    t = tableControl.GetType();
+    var wrapListView = t.InvokeMember("Control",
+    BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.GetProperty,
+    null,
+    tableControl,
+    null);
+
+    t = wrapListView.GetType();
+    dynamic tableControlView = t.InvokeMember("TableControlView",
+    BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.GetField,
+    null,
+    wrapListView,
+    null);
+
+    t.InvokeMember("TryScrollSelectedItemIntoViewport",
+            BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.InvokeMethod,
+            null,
+            wrapListView,
+            new object[] { 0 });
 }
 public void OnBufferClosed(object sender, EventArgs e)
 {
