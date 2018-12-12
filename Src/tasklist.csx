@@ -38,7 +38,7 @@ taskListWindow.Activate();
 var taskList = taskListWindow.Object as TaskList;
 if (taskList != null && 0 < taskList.TaskItems.Count && GetSelectedIndex() == -1)
 {
-    taskList.TaskItems.Item(1).Select();
+    SetSelectedIndex(0);
 }
 DTE.ActiveDocument.Activate();
 
@@ -47,30 +47,29 @@ public void OnKeyInputStart(object sender, KeyInputStartEventArgs e)
     e.Handled = true;
 
     var taskList = taskListWindow.Object as TaskList;
+    int index;
     if (e.KeyInput.Char == 'j')
     {
-        if (taskList != null && 0 < taskList.TaskItems.Count && GetSelectedIndex() < taskList.TaskItems.Count)
+        if (taskList != null && 0 < taskList.TaskItems.Count)
         {
-            var args = new KeyEventArgs(Keyboard.PrimaryDevice, Keyboard.PrimaryDevice.ActiveSource, 0, Key.Down)
+            index = GetSelectedIndex();
+            if (index < taskList.TaskItems.Count)
             {
-                RoutedEvent = Keyboard.KeyDownEvent
-            };
-            taskListWindow.Activate();
-            InputManager.Current.ProcessInput(args);
-            DTE.ActiveDocument.Activate();
+                index++;
+                SetSelectedIndex(index);
+            }
         }
     }
     else if (e.KeyInput.Char == 'k')
     {
-        if (taskList != null && 0 < taskList.TaskItems.Count && 0 < GetSelectedIndex())
+        if (taskList != null && 0 < taskList.TaskItems.Count)
         {
-            var args = new KeyEventArgs(Keyboard.PrimaryDevice, Keyboard.PrimaryDevice.ActiveSource, 0, Key.Up)
+            index = GetSelectedIndex();
+            if (0 < index)
             {
-                RoutedEvent = Keyboard.KeyDownEvent
-            };
-            taskListWindow.Activate();
-            InputManager.Current.ProcessInput(args);
-            DTE.ActiveDocument.Activate();
+                index--;
+                SetSelectedIndex(index);
+            }
         }
     }
     else if (e.KeyInput.Key == VimKey.Enter)
@@ -122,6 +121,42 @@ public int GetSelectedIndex()
 
     //Vim.DisplayStatus(index.ToString());
     return index;
+}
+public void SetSelectedIndex(int index)
+{
+    Type t;
+    var taskList = taskListWindow.Object as TaskList;
+    if (taskList == null)
+    {
+        return;
+    }
+    t = taskList.GetType();
+    var tableControl = t.InvokeMember("TableControl",
+                BindingFlags.GetProperty | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance,
+                null,
+                taskList,
+                null);
+    if (tableControl == null)
+    {
+        return;
+    }
+    t = tableControl.GetType();
+    var controlViewModel = t.InvokeMember("ControlViewModel",
+                BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.GetField,
+                null,
+                tableControl,
+                null);
+    if (controlViewModel == null)
+    {
+        return;
+    }
+    t = controlViewModel.GetType();
+    t.InvokeMember("SelectedIndex",
+                BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.SetProperty,
+                null,
+                controlViewModel,
+                new object[] { index});
+
 }
 public void OnBufferClosed(object sender, EventArgs e)
 {
