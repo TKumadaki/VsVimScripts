@@ -4,10 +4,10 @@
 ## 既知の問題
 
 Solution.csxやFindResultsWindow.csxはVisual Studioのツールウィンドウを操作しています。  
-しかし以下の状態になると操作することができなくなります。
+しかし以下の状態になると操作することができなくなります。  
 
 - csxコマンドを実行したエディタがアクティブではなくなった。  
-- csxコマンドを実行したエディタが閉じられた。
+- csxコマンドを実行したエディタが閉じられた。  
 
 理由は、csxコマンドを実行したエディタのキーイベントを取得してツールウィンドウを操作しているからです。  
 
@@ -20,10 +20,10 @@ SimpleSurround.csxなどを使用する時、ユーザーはコマンドマー�
 - CalledCount.csx
 - FindAll.csx
 - FindAllReferences.csx
-- FindAllReferencesResults.csx
+- [FindAllReferencesResults.csx](FindAllReferencesResults.ja.md)
 - FindAllReferencesWindow.csx  
   このスクリプトは単独では動作しません。
-- FindResults.csx
+- [FindResults.csx](FindResults.ja.md)
 - FindResultsWindow.csx  
   このスクリプトは単独では動作しません。
 - Methods.csx

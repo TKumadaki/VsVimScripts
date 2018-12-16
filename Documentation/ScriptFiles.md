@@ -12,7 +12,7 @@ However, it becomes impossible to operate if it becomes the following state.
 The reason for these is that the script gets the key event of the editor that executed the csx command and manipulates the tool window.  
 
 When using SimpleSurround.csx etc., the user needs to enter a value in the command margin.  
-The command margin at this time is a poor function that the cursor is not displayed and the arrow keys can not be used.
+The command margin at this time is a poor function that the cursor is not displayed and the arrow keys can not be used.  
 This is because methods that manipulate command margins are not exposed.  
 
 ## Description of each script file
@@ -20,10 +20,10 @@ This is because methods that manipulate command margins are not exposed.
 - CalledCount.csx
 - FindAll.csx
 - FindAllReferences.csx
-- FindAllReferencesResults.csx
+- [FindAllReferencesResults.csx](FindAllReferencesResults.md)
 - FindAllReferencesWindow.csx  
   This script does not work on its own.
-- FindResults.csx
+- [FindResults.csx](FindResults.md)
 - FindResultsWindow.csx  
   This script does not work on its own.
 - Methods.csx

@@ -1,7 +1,7 @@
-TaskList.csx
+FindResults.csx
 ===
 
-Operate Task List Window.  
+Operate Find Results 1 Window.  
 
 ## Supported commands
 

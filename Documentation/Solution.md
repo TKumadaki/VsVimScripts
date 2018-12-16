@@ -1,7 +1,7 @@
 Solution.csx
 ===
 
-Operate Solution Explorer.
+Operate Solution Explorer.  
 
 ## Supported commands
 

@@ -34,6 +34,10 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Documentation\FindAllReferencesResults.ja.md" />
+    <None Include="Documentation\FindAllReferencesResults.md" />
+    <None Include="Documentation\FindResults.ja.md" />
+    <None Include="Documentation\FindResults.md" />
     <None Include="Documentation\ScriptFiles.ja.md" />
     <None Include="Documentation\ScriptFiles.md" />
     <None Include="Documentation\Solution.ja.md" />

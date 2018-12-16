@@ -1,7 +1,7 @@
-TaskList.csx
+FindAllReferencesResults.csx
 ===
 
-Operate Task List Window.  
+Operate Find All References Window.  
 
 ## Supported commands
 
