@@ -1,7 +1,7 @@
 FindAllReferencesResults.csx
 ===
 
-Operate Find All References Window.  
+Operate Find All References Window.   
 
 ## Supported commands
 

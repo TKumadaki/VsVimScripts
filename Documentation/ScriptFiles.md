@@ -19,7 +19,7 @@ This is because methods that manipulate command margins are not exposed.
 
 - CalledCount.csx
 - FindAll.csx
-- FindAllReferences.csx
+- [FindAllReferences.csx](FindAllReferences.md)
 - [FindAllReferencesResults.csx](FindAllReferencesResults.md)
 - FindAllReferencesWindow.csx  
   This script does not work on its own.

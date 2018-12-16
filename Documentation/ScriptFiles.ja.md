@@ -19,7 +19,7 @@ SimpleSurround.csxなどを使用する時、ユーザーはコマンドマー�
 
 - CalledCount.csx
 - FindAll.csx
-- FindAllReferences.csx
+- [FindAllReferences.csx](FindAllReferences.ja.md)
 - [FindAllReferencesResults.csx](FindAllReferencesResults.ja.md)
 - FindAllReferencesWindow.csx  
   このスクリプトは単独では動作しません。
