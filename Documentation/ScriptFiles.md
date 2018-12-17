@@ -29,7 +29,7 @@ This is because methods that manipulate command margins are not exposed.
 - Methods.csx
 - Options.csx  
   This script does not work on its own.
-- Scroll.csx
+- [Scroll.csx](Scroll.md)
 - SelectionMove.csx
 - SimpleSurround.csx
 - [Solution.csx](Solution.md)
