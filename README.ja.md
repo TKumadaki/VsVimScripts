@@ -13,8 +13,8 @@ https://github.com/TKumadaki/VsVim/tree/execute-csharp-script-ver2
 
 csxファイルを実行するコマンドは以下になります。
 
-csx `<スクリプトファイル名>`  
-csxe `<スクリプトファイル名>`  
+`csx <スクリプトファイル名>`  
+`csxe <スクリプトファイル名>`  
 
 スクリプトファイル名に拡張子は必要ありません。  
 
