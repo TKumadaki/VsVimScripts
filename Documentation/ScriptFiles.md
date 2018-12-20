@@ -30,7 +30,7 @@ This is because methods that manipulate command margins are not exposed.
 - Options.csx  
   This script does not work on its own.
 - [Scroll.csx](Scroll.md)
-- SelectionMove.csx
+- [SelectionMove.csx](SelectionMove.md)
 - SimpleSurround.csx
 - [Solution.csx](Solution.md)
 - [Tasklist.csx](TaskList.md)

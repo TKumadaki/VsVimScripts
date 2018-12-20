@@ -29,8 +29,8 @@ SimpleSurround.csxなどを使用する時、ユーザーはコマンドマー�
 - Methods.csx
 - Options.csx  
   このスクリプトは単独では動作しません。
-- [Scroll.csx](Scroll.md)
-- SelectionMove.csx
+- [Scroll.csx](Scroll.ja.md)
+- [SelectionMove.csx](SelectionMove.ja.md)
 - SimpleSurround.csx
 - [Solution.csx](Solution.ja.md)
 - [Tasklist.csx](TaskList.ja.md)

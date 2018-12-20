@@ -44,6 +44,8 @@
     <None Include="Documentation\ScriptFiles.md" />
     <None Include="Documentation\Scroll.ja.md" />
     <None Include="Documentation\Scroll.md" />
+    <None Include="Documentation\SelectionMove.ja.md" />
+    <None Include="Documentation\SelectionMove.md" />
     <None Include="Documentation\Solution.ja.md" />
     <None Include="Documentation\Solution.md" />
     <None Include="Documentation\TaskList.ja.md" />
