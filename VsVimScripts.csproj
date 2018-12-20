@@ -40,6 +40,8 @@
     <None Include="Documentation\FindAllReferencesResults.md" />
     <None Include="Documentation\FindResults.ja.md" />
     <None Include="Documentation\FindResults.md" />
+    <None Include="Documentation\Methods.ja.md" />
+    <None Include="Documentation\Methods.md" />
     <None Include="Documentation\ScriptFiles.ja.md" />
     <None Include="Documentation\ScriptFiles.md" />
     <None Include="Documentation\Scroll.ja.md" />

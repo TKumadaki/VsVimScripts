@@ -26,7 +26,7 @@ This is because methods that manipulate command margins are not exposed.
 - [FindResults.csx](FindResults.md)
 - FindResultsWindow.csx  
   This script does not work on its own.
-- Methods.csx
+- [Methods.csx](Methods.md)
 - Options.csx  
   This script does not work on its own.
 - [Scroll.csx](Scroll.md)
