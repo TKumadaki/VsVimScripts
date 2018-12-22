@@ -15,10 +15,10 @@ Operate Solution Explorer.
 - F: Search backward.
 - gg: Move to the top item.
 - G: Go to the most bottom item in current tree.
-- h: Move to the tree below.
+- h: Move to the tree above.
 - j: Move down.
 - k: Move up.
-- l: Move to the tree above.
+- l: Move to the tree below.
 - n: Jump to the next search candidate.
 - N: Jump to the next search candidate (backward).
 - r: Change the file name.

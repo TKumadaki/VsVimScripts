@@ -36,6 +36,8 @@
     <None Include="App.config" />
     <None Include="Documentation\CalledCount.ja.md" />
     <None Include="Documentation\CalledCount.md" />
+    <None Include="Documentation\FindAll.ja.md" />
+    <None Include="Documentation\FindAll.md" />
     <None Include="Documentation\FindAllReferences.ja.md" />
     <None Include="Documentation\FindAllReferences.md" />
     <None Include="Documentation\FindAllReferencesResults.ja.md" />
