@@ -31,7 +31,7 @@ This is because methods that manipulate command margins are not exposed.
   This script does not work on its own.
 - [Scroll.csx](Scroll.md)
 - [SelectionMove.csx](SelectionMove.md)
-- SimpleSurround.csx
+- [SimpleSurround.csx](SimpleSurround.md)
 - [Solution.csx](Solution.md)
 - [Tasklist.csx](TaskList.md)
 - TinyVim.csx  

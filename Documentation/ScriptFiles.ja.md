@@ -31,7 +31,7 @@ SimpleSurround.csxなどを使用する時、ユーザーはコマンドマー�
   このスクリプトは単独では動作しません。
 - [Scroll.csx](Scroll.ja.md)
 - [SelectionMove.csx](SelectionMove.ja.md)
-- SimpleSurround.csx
+- [SimpleSurround.csx](SimpleSurround.ja.csx)
 - [Solution.csx](Solution.ja.md)
 - [Tasklist.csx](TaskList.ja.md)
 - TinyVim.csx  
