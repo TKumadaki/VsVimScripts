@@ -1,4 +1,10 @@
-﻿#load "util.csx"
+﻿#r "Microsoft.VisualStudio.ComponentModelHost.dll"
+#r "Microsoft.VisualStudio.Editor.dll"
+#r "Microsoft.VisualStudio.Shell.Interop.dll"
+#r "Microsoft.VisualStudio.Text.Data.dll"
+#r "Microsoft.VisualStudio.TextManager.Interop.dll"
+
+#load "util.csx"
 
 using EnvDTE;
 using Microsoft.VisualStudio.Editor;

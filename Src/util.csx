@@ -1,4 +1,10 @@
-﻿
+﻿#r "EnvDTE80.dll"
+#r "EnvDTE.dll"
+#r "Microsoft.VisualStudio.CoreUtility.dll"
+#r "Microsoft.VisualStudio.Text.UI.dll"
+#r "Microsoft.VisualStudio.Text.UI.Wpf.dll"
+#r "Microsoft.VisualStudio.Shell.11.0.dll"
+
 using EnvDTE80;
 using EnvDTE;
 using Microsoft.VisualStudio.Shell;
