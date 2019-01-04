@@ -1,4 +1,5 @@
 ﻿#load "Util.csx"
+#load "WindowUtil.csx"
 
 using EnvDTE80;
 using EnvDTE;
@@ -8,9 +9,11 @@ using System.Linq;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Windows.Input;
+using System.Reflection;
 using Vim;
 using Vim.Extensions;
-using System.Windows.Input;
+
 
 public class FindAllReferencesWindow
 {
@@ -57,30 +60,38 @@ public class FindAllReferencesWindow
     {
         e.Handled = true;
 
+        int index;
         if (e.KeyInput.Char == 'j')
         {
-            var args = new KeyEventArgs(Keyboard.PrimaryDevice, Keyboard.PrimaryDevice.ActiveSource, 0, Key.Down)
+            int count = findAllReferencesWindow.GetItemsCount();
+            if (0 < count)
             {
-                RoutedEvent = Keyboard.KeyDownEvent
-            };
-            findAllReferencesWindow.Activate();
-            InputManager.Current.ProcessInput(args);
-            dte.ActiveDocument.Activate();
+                index = findAllReferencesWindow.GetSelectedIndex();
+                if (index < count)
+                {
+                    index++;
+                    findAllReferencesWindow.SetSelectedIndex(index);
+                }
+            }
         }
         else if (e.KeyInput.Char == 'k')
         {
-            var args = new KeyEventArgs(Keyboard.PrimaryDevice, Keyboard.PrimaryDevice.ActiveSource, 0, Key.Up)
+            if (0 < findAllReferencesWindow.GetItemsCount())
             {
-                RoutedEvent = Keyboard.KeyDownEvent
-            };
-            findAllReferencesWindow.Activate();
-            InputManager.Current.ProcessInput(args);
-            dte.ActiveDocument.Activate();
+                index = findAllReferencesWindow.GetSelectedIndex();
+                if (0 < index)
+                {
+                    index--;
+                    findAllReferencesWindow.SetSelectedIndex(index);
+                }
+            }
         }
         else if (e.KeyInput.Key == VimKey.Enter)
         {
             EndIntercept();
-            findAllReferencesWindow.Activate();
+            //findAllReferencesWindow.Activate();
+            findAllReferencesWindow.NavigateToSelectedEntry();
+            dte.ActiveDocument.Activate();
         }
         else if (e.KeyInput.Key == VimKey.Escape)
         {
