@@ -76,6 +76,7 @@
     <None Include="Src\Tasklist.csx" />
     <None Include="Src\TinyVim.csx" />
     <None Include="Src\Util.csx" />
+    <None Include="Src\WindowUtil.csx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="License.txt" />
