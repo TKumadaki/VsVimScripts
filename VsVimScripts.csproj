@@ -76,10 +76,17 @@
     <None Include="Src\Tasklist.csx" />
     <None Include="Src\TinyVim.csx" />
     <None Include="Src\Util.csx" />
+    <None Include="Src\VsVimFindResultsWindow.csx" />
     <None Include="Src\WindowUtil.csx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="License.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Src\VsVimFindResultsWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
