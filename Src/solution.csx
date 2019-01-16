@@ -524,6 +524,7 @@ deleteYesCp.CommandAction = (x) =>
     ProjectItem pi = GetSelectedProjectItem();
     //pi?.Remove(); //Removes the project item from the collection.
     pi?.Delete(); //Removes the item from its project and its storage.
+    SwitchNormalMode(swichMessage: true);
 };
 
 //Delete Mode:no
