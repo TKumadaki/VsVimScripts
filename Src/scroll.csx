@@ -47,8 +47,12 @@ private void OnKeyInputStart(object sender, KeyInputStartEventArgs e)
     else
     {
         var count = textView.TextViewLines.Count;
-        count = count / 2;
-        var line = textView.TextViewLines[count];
+        var index = count / 2;
+        if (textView.TextViewLines.Count <= index)
+        {
+            index = 0;
+        }
+        var line = textView.TextViewLines[index];
 
         var lineNumber = line.Start.GetContainingLine().LineNumber;
         var snapshotLine = textView.TextSnapshot.GetLineFromLineNumber(lineNumber);

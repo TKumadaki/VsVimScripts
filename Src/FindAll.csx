@@ -119,9 +119,9 @@ public void FindExecute(string searchKeyword)
     find.MatchInHiddenText = (bool)findOptions["-MatchInHiddenText"];
     find.MatchWholeWord = (bool)findOptions["-MatchWholeWord"];
     find.PatternSyntax = (vsFindPatternSyntax)findOptions["-PatternSyntax"];
-    //find.ReplaceWith = "NEW THING";
+    //find.ReplaceWith = "hoge";
     find.ResultsLocation = vsFindResultsLocation.vsFindResults1;
-    //find.SearchPath = "c:    emp";
+    //find.SearchPath = @"c:\hoge";
     find.SearchSubfolders = (bool)findOptions["-SearchSubfolders"];
     find.Target = (vsFindTarget)findOptions["-Target"];
 
