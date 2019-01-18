@@ -4,6 +4,7 @@
 #r "Microsoft.VisualStudio.OLE.Interop.dll"
 
 using Microsoft.CSharp;
+using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using System;
@@ -19,7 +20,6 @@ using System.Collections.ObjectModel;
 public class VsVimFindResultsWindow
 {
     public const string ToolWindowGuid = "5433925F-6DF5-4A5B-B51F-0A20EBA30481";
-    private const int singleInstanceId = 0; // Single-instance toolwindow
     private IVsWindowFrame windowFrame = null;
     private ListBox listBox = null;
     private object docView = null;
@@ -29,9 +29,8 @@ public class VsVimFindResultsWindow
     public VsVimFindResultsWindow()
     {
 
+        Guid guidEmpty = Guid.Empty;
         Guid toolWindowGuid;
-        Guid guidNull = Guid.Empty;
-        int[] position = new int[1];
         int result;
 
         var shell = (IVsUIShell)Package.GetGlobalService(typeof(SVsUIShell));
@@ -43,9 +42,10 @@ public class VsVimFindResultsWindow
         {
             VsVimFindResultsWindowControl control = new VsVimFindResultsWindowControl();
             result = shell.CreateToolWindow((uint)__VSCREATETOOLWIN.CTW_fInitNew,
-                singleInstanceId, control,
-                ref guidNull, ref toolWindowGuid, ref guidNull, null, "VsVimFindResultsWindow", position, out windowFrame);
-            Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(result);
+                0, control,
+                ref guidEmpty, ref toolWindowGuid, ref guidEmpty, null, "VsVimFindResultsWindow", null, out windowFrame);
+
+            ErrorHandler.ThrowOnFailure(result);
             windowFrame.SetProperty((int)__VSFPROPID.VSFPROPID_FrameMode, VSFRAMEMODE.VSFM_Dock);
         }
         windowFrame.GetProperty((int)__VSFPROPID.VSFPROPID_DocView, out docView);
