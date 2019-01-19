@@ -19,40 +19,32 @@ var DTE = Util.GetDTE2();
 
 FileCodeModel fcm = DTE.ActiveDocument.ProjectItem.FileCodeModel as FileCodeModel;
 if (fcm == null)
+{
+    Vim.DisplayError("Can not get FileCodeModel");
     return;
+}
 
 var findResultItems = new ObservableCollection<IFindResultItem>();
 MethodItem mi;
 
-foreach (CodeElement element in fcm.CodeElements)
+try
 {
-    if (element is CodeNamespace)
+    foreach (CodeElement element in fcm.CodeElements)
     {
-        CodeNamespace nsp = element as CodeNamespace;
-
-        foreach (CodeElement subElement in nsp.Children)
-        {
-            if (subElement is CodeClass)
-            {
-                CodeClass c2 = subElement as CodeClass;
-                foreach (CodeElement item in c2.Children)
-                {
-                    if (item is CodeFunction)
-                    {
-                        CodeFunction cf = item as CodeFunction;
-                        mi = new MethodItem();
-                        mi.Name = cf.Name;
-                        mi.NavigateItem = cf.StartPoint.Line;
-                        findResultItems.Add(mi);
-                    }
-                }
-            }
-        }
+        MakeFindResultItem(ref findResultItems, element);
     }
+}
+catch (Exception ex)
+{
+    Vim.DisplayError(ex.Message);
+    return;
 }
 
 if (findResultItems.Count == 0)
+{
+    Vim.DisplayError("There was no item");
     return;
+}
 
 vimBuffer.KeyInputStart += OnKeyInputStart;
 vimBuffer.Closed += OnBufferClosed;
@@ -63,6 +55,41 @@ toolWindow.SetFindResultItems(findResultItems);
 toolWindow.Show();
 DTE.ActiveDocument.Activate();
 
+public void MakeFindResultItem(ref ObservableCollection<IFindResultItem> items, CodeElement element)
+{
+    try
+    {
+        if (element is CodeFunction || element is CodeProperty)
+        {
+            var t = element.GetType();
+            mi = new MethodItem();
+            mi.Name = (string)t.InvokeMember("Name",
+                                            BindingFlags.Public | BindingFlags.Instance | BindingFlags.GetProperty,
+                                            null,
+                                            element,
+                                            null);
+            var tp = (TextPoint)t.InvokeMember("StartPoint",
+                                            BindingFlags.Public | BindingFlags.Instance | BindingFlags.GetProperty,
+                                            null,
+                                            element,
+                                            null);
+            mi.NavigateItem = tp.Line;
+            items.Add(mi);
+            return;
+        }
+        foreach (var child in element.Children)
+        {
+            if (child is CodeElement)
+            {
+                MakeFindResultItem(ref items, (CodeElement)child);
+            }
+        }
+    }
+    catch (Exception ex)
+    {
+        Vim.DisplayError(ex.Message);
+    }
+}
 public void OnKeyInputStart(object sender, KeyInputStartEventArgs e)
 {
     e.Handled = true;
