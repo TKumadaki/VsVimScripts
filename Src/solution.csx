@@ -694,7 +694,7 @@ private void Search(string keyword, UIHierarchy solutionExplorer, object startIt
     {
         for (int i = 0; i < startIndex; i++)
         {
-            if (searchList[i].Name.IndexOf(keyword) == 0)
+            if (0 <= searchList[i].Name.IndexOf(keyword))
             {
                 index = i;
                 break;
