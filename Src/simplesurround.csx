@@ -35,6 +35,7 @@ private void OnKeyInputStart(object sender, KeyInputStartEventArgs e)
     }
     else if (e.KeyInput.Key == VimKey.Enter)
     {
+        EndIntercept();
         if (tagStarted && !(string.IsNullOrWhiteSpace(addText)))
         {
 
@@ -56,7 +57,6 @@ private void OnKeyInputStart(object sender, KeyInputStartEventArgs e)
             vimBuffer.Process(sendText, enter: false);
             vimBuffer.SwitchMode(ModeKind.Normal, ModeArgument.None);
         }
-        EndIntercept();
         return;
     }
     else if (e.KeyInput.Key == VimKey.Back)

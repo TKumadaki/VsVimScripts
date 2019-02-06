@@ -57,20 +57,16 @@ public static bool TryGetWpfTextView(this IVimBuffer vimBuffer, out IWpfTextView
     }
     return true;
 }
-public static void Process(this IVimBuffer vimBuffer, KeyInput keyInput)
-{
-    vimBuffer.ProcessFromScript(keyInput);
-}
 public static void Process(this IVimBuffer vimBuffer, string input, bool enter = false)
 {
     foreach (var c in input)
     {
         var i = KeyInputUtil.CharToKeyInput(c);
-        Process(vimBuffer, i);
+        vimBuffer.Process(i);
     }
 
     if (enter)
     {
-        Process(vimBuffer, KeyInputUtil.EnterKey);
+        vimBuffer.Process(KeyInputUtil.EnterKey);
     }
 }

@@ -54,6 +54,8 @@ private void OnKeyInputStart(object sender, KeyInputStartEventArgs e)
         }
         vimBuffer.SwitchMode(ModeKind.Command, ModeArgument.None);
 
+        vimBuffer.KeyInputStart -= OnKeyInputStart;
+
         vimBuffer.Process("'<,'>move '<-2", enter: true);
         vimBuffer.SwitchMode(ModeKind.Normal, ModeArgument.None);
 
@@ -66,6 +68,7 @@ private void OnKeyInputStart(object sender, KeyInputStartEventArgs e)
         {
             vimBuffer.Process((lineCount - 1).ToString() + "j", enter: false);
         }
+        vimBuffer.KeyInputStart += OnKeyInputStart;
     }
     else if (e.KeyInput.Char == 'j')
     {
@@ -75,6 +78,8 @@ private void OnKeyInputStart(object sender, KeyInputStartEventArgs e)
             return;
         }
         vimBuffer.SwitchMode(ModeKind.Command, ModeArgument.None);
+
+        vimBuffer.KeyInputStart -= OnKeyInputStart;
 
         vimBuffer.Process("'<,'>move '>+1", enter: true);
         vimBuffer.SwitchMode(ModeKind.Normal, ModeArgument.None);
@@ -87,6 +92,7 @@ private void OnKeyInputStart(object sender, KeyInputStartEventArgs e)
         {
             vimBuffer.Process((lineCount - 1).ToString() + "j", enter: false);
         }
+        vimBuffer.KeyInputStart += OnKeyInputStart;
     }
     else
     {

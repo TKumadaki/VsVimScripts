@@ -114,6 +114,7 @@ public void OnKeyInputStart(object sender, KeyInputStartEventArgs e)
                     selectedItem,
                     null);
             vimBuffer.SwitchMode(ModeKind.Normal, ModeArgument.None);
+            vimBuffer.KeyInputStart -= OnKeyInputStart;
             vimBuffer.Process(lineNumber.ToString() + "G", enter: false);
         }
         EndIntercept();
