@@ -38,5 +38,9 @@ This is because methods that manipulate command margins are not exposed.
   This script does not work on its own.
 - Util.csx  
   This script does not work on its own.
+- VsVimFindResultsWindow.csx  
+  This script does not work on its own.
+- VsVimFindResultsWindow.xaml  
+  This is xaml for use with VsVimFindResultsWindow.csx.
 - WindowUtil.csx  
   This script does not work on its own.

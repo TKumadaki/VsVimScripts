@@ -38,5 +38,9 @@ SimpleSurround.csxなどを使用する時、ユーザーはコマンドマー�
   このスクリプトは単独では動作しません。
 - Util.csx  
   このスクリプトは単独では動作しません。
+- VsVimFindResultsWindow.csx  
+  このスクリプトは単独では動作しません。
+- VsVimFindResultsWindow.xaml  
+  これはVsVimFindResultsWindow.csxで使用するxamlです。
 - WindowUtil.csx  
   このスクリプトは単独では動作しません。
