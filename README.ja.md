@@ -5,33 +5,11 @@ VsVim Scriptsは、VsVimで動作するC#のスクリプトファイルです。
 
 ## 実行方法
 
-公式のVsVimではスクリプトファイルの実行をサポートしていません。  
-以下のブランチをコンパイルしてインストールしてください。  
-https://github.com/TKumadaki/VsVim/tree/execute-csharp-script-ver2  
-これによりcsx,csxeコマンドが使用可能になります。  
-次にcsxファイルを"C:\Users\ユーザー\VsVimScripts"フォルダへ配置してください。  
-
-csxファイルを実行するコマンドは以下になります。
-
-`csx <スクリプトファイル名>`  
-`csxe <スクリプトファイル名>`  
-
-スクリプトファイル名に拡張子は必要ありません。  
-
-csxは一度コンパイルされたオブジェクトを再利用します。  
-static変数を利用して、前回実行した情報を保持することができます。
-
-csxeはコマンドが実行される度、コンパイルを行います。
-デバッグでの使用を想定しています。
+[ここ](https://github.com/jaredpar/VsVim/blob/master/Documentation/C%23%20scripting.md)を参照してください。  
 
 ## 各スクリプトファイルについて
 
 [ここ](Documentation/ScriptFiles.ja.md)を参照してください。  
-
-## 注意点
-
-Visual Studio 2017のみ動作します。  
-この機能は公式のものではないため、何らかの問題が発生した場合、リポジトリを予告なく削除することがあります。
 
 ## ライセンス
 
