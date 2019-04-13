@@ -1,7 +1,7 @@
 VsVim Scripts
 ===
 
-VsVim Scripts is a C # script file that runs on VsVim.  
+VsVim Scripts is a C # script file that runs on [VsVim](https://github.com/jaredpar/VsVim).  
 
 ## Execution method
 
@@ -14,6 +14,6 @@ See [here](Documentation/ScriptFiles.md).
 ## License
 
 All code in this project is covered under the Apache 2 license a copy of which is available in the same directory under the name License.txt.  
-VsVim is a work of Jared Parsons.  
+VsVim is a work of [Jared Parsons](https://github.com/jaredpar).  
 
 For Japanese Version: [日本語版](README.ja.md)

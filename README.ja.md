@@ -1,7 +1,7 @@
 VsVim Scripts
 ===
 
-VsVim Scriptsは、VsVimで動作するC#のスクリプトファイルです。
+VsVim Scriptsは、[VsVim](https://github.com/jaredpar/VsVim)で動作するC#のスクリプトファイルです。
 
 ## 実行方法
 
@@ -14,5 +14,5 @@ VsVim Scriptsは、VsVimで動作するC#のスクリプトファイルです。
 ## ライセンス
 
 このプロジェクトのすべてのコードはApache 2ライセンスの対象となっています。そのコピーはLicense.txtという名前で同じディレクトリにあります。  
-VsVimはJared Parsonsの著作物です。
+VsVimは[Jared Parsons](https://github.com/jaredpar)の著作物です。
 
