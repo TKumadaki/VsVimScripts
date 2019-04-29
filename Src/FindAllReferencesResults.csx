@@ -11,5 +11,5 @@ using System.Text.RegularExpressions;
 using Vim;
 using Vim.Extensions;
 
-var farw = new FindAllReferencesWindow(Vim);
+var farw = new FindAllReferencesWindow(VimBuffer);
 farw.Display();

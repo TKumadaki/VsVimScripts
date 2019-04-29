@@ -11,5 +11,5 @@ using System.Text.RegularExpressions;
 using Vim;
 using Vim.Extensions;
 
-var frw = new FindResultsWindow(Vim);
+var frw = new FindResultsWindow(VimBuffer);
 frw.Display();

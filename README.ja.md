@@ -5,7 +5,7 @@ VsVim Scriptsは、[VsVim](https://github.com/jaredpar/VsVim)で動作するC#�
 
 ## 実行方法
 
-[ここ](https://github.com/jaredpar/VsVim/blob/master/Documentation/C%23%20scripting.md)を参照してください。  
+[ここ](https://github.com/VsVim/VsVim/blob/master/Documentation/CSharp%20scripting.md)を参照してください。  
 
 ## 各スクリプトファイルについて
 

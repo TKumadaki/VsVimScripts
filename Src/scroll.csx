@@ -5,24 +5,17 @@ using Microsoft.VisualStudio.Text.Editor;
 using System;
 using Vim;
 
-IVimBuffer vimBuffer;
 IWpfTextView textView;
 
-if (!Vim.TryGetActiveVimBuffer(out vimBuffer))
+if (!VimBuffer.TryGetWpfTextView(out textView))
 {
-    Vim.DisplayError("Can not get VimBuffer");
-    return;
-}
-
-if (!vimBuffer.TryGetWpfTextView(out textView))
-{
-    Vim.DisplayError("Can not get WpfTextView");
+    VimBuffer.DisplayError("Can not get WpfTextView");
     return;
 }
 
 
-vimBuffer.KeyInputStart += OnKeyInputStart;
-vimBuffer.Closed += OnBufferClosed;
+VimBuffer.KeyInputStart += OnKeyInputStart;
+VimBuffer.Closed += OnBufferClosed;
 
 private void OnKeyInputStart(object sender, KeyInputStartEventArgs e)
 {
@@ -65,8 +58,8 @@ private void OnKeyInputStart(object sender, KeyInputStartEventArgs e)
 }
 private void EndIntercept()
 {
-    vimBuffer.KeyInputStart -= OnKeyInputStart;
-    vimBuffer.Closed -= OnBufferClosed;
+    VimBuffer.KeyInputStart -= OnKeyInputStart;
+    VimBuffer.Closed -= OnBufferClosed;
 }
 private void OnBufferClosed(object sender, EventArgs e)
 {

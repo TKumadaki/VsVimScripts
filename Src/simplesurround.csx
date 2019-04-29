@@ -9,16 +9,8 @@ readonly string END_TAG = ">";
 bool tagStarted = false;
 string addText = string.Empty;
 
-IVimBuffer vimBuffer;
-
-if (!Vim.TryGetActiveVimBuffer(out vimBuffer))
-{
-    Vim.DisplayError("Can not get VimBuffer");
-    return;
-}
-
-vimBuffer.KeyInputStart += OnKeyInputStart;
-vimBuffer.Closed += OnBufferClosed;
+VimBuffer.KeyInputStart += OnKeyInputStart;
+VimBuffer.Closed += OnBufferClosed;
 
 private void OnKeyInputStart(object sender, KeyInputStartEventArgs e)
 {
@@ -40,10 +32,10 @@ private void OnKeyInputStart(object sender, KeyInputStartEventArgs e)
         {
 
             //START
-            vimBuffer.Process("I", enter: false);
+            VimBuffer.Process("I", enter: false);
             string sendText = START_TAG + addText + END_TAG;
-            vimBuffer.Process(sendText, enter: false);
-            vimBuffer.SwitchMode(ModeKind.Normal, ModeArgument.None);
+            VimBuffer.Process(sendText, enter: false);
+            VimBuffer.SwitchMode(ModeKind.Normal, ModeArgument.None);
 
             //END
             string tag = addText;
@@ -52,10 +44,10 @@ private void OnKeyInputStart(object sender, KeyInputStartEventArgs e)
             {
                 tag = addText.Substring(0, idx);
             }
-            vimBuffer.Process("A", enter: false);
+            VimBuffer.Process("A", enter: false);
             sendText = START_TAG + "/" + tag + END_TAG;
-            vimBuffer.Process(sendText, enter: false);
-            vimBuffer.SwitchMode(ModeKind.Normal, ModeArgument.None);
+            VimBuffer.Process(sendText, enter: false);
+            VimBuffer.SwitchMode(ModeKind.Normal, ModeArgument.None);
         }
         return;
     }
@@ -76,14 +68,14 @@ private void OnKeyInputStart(object sender, KeyInputStartEventArgs e)
     }
     if (tagStarted)
     {
-        Vim.DisplayStatus(START_TAG + addText);
+        VimBuffer.DisplayStatus(START_TAG + addText);
     }
 }
 private void EndIntercept()
 {
-    vimBuffer.KeyInputStart -= OnKeyInputStart;
-    vimBuffer.Closed -= OnBufferClosed;
-    Vim.DisplayStatus(string.Empty);
+    VimBuffer.KeyInputStart -= OnKeyInputStart;
+    VimBuffer.Closed -= OnBufferClosed;
+    VimBuffer.DisplayStatus(string.Empty);
 }
 private void OnBufferClosed(object sender, EventArgs e)
 {

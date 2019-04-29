@@ -7,20 +7,12 @@ using System.Collections.ObjectModel;
 using System.Reflection;
 using Vim;
 
-IVimBuffer vimBuffer;
-
-if (!Vim.TryGetActiveVimBuffer(out vimBuffer))
-{
-    Vim.DisplayError("Can not get VimBuffer");
-    return;
-}
-
 var DTE = Util.GetDTE2();
 
 FileCodeModel fcm = DTE.ActiveDocument.ProjectItem.FileCodeModel as FileCodeModel;
 if (fcm == null)
 {
-    Vim.DisplayError("Can not get FileCodeModel");
+    VimBuffer.DisplayError("Can not get FileCodeModel");
     return;
 }
 
@@ -36,18 +28,18 @@ try
 }
 catch (Exception ex)
 {
-    Vim.DisplayError(ex.Message);
+    VimBuffer.DisplayError(ex.Message);
     return;
 }
 
 if (findResultItems.Count == 0)
 {
-    Vim.DisplayError("There was no item");
+    VimBuffer.DisplayError("There was no item");
     return;
 }
 
-vimBuffer.KeyInputStart += OnKeyInputStart;
-vimBuffer.Closed += OnBufferClosed;
+VimBuffer.KeyInputStart += OnKeyInputStart;
+VimBuffer.Closed += OnBufferClosed;
 
 var toolWindow = new VsVimFindResultsWindow();
 
@@ -87,7 +79,7 @@ public void MakeFindResultItem(ref ObservableCollection<IFindResultItem> items, 
     }
     catch (Exception ex)
     {
-        Vim.DisplayError(ex.Message);
+        VimBuffer.DisplayError(ex.Message);
     }
 }
 public void OnKeyInputStart(object sender, KeyInputStartEventArgs e)
@@ -113,9 +105,9 @@ public void OnKeyInputStart(object sender, KeyInputStartEventArgs e)
                     null,
                     selectedItem,
                     null);
-            vimBuffer.SwitchMode(ModeKind.Normal, ModeArgument.None);
-            vimBuffer.KeyInputStart -= OnKeyInputStart;
-            vimBuffer.Process(lineNumber.ToString() + "G", enter: false);
+            VimBuffer.SwitchMode(ModeKind.Normal, ModeArgument.None);
+            VimBuffer.KeyInputStart -= OnKeyInputStart;
+            VimBuffer.Process(lineNumber.ToString() + "G", enter: false);
         }
         EndIntercept();
     }
@@ -130,9 +122,9 @@ public void OnBufferClosed(object sender, EventArgs e)
 }
 public void EndIntercept()
 {
-    vimBuffer.KeyInputStart -= OnKeyInputStart;
-    vimBuffer.Closed -= OnBufferClosed;
-    Vim.DisplayStatus(string.Empty);
+    VimBuffer.KeyInputStart -= OnKeyInputStart;
+    VimBuffer.Closed -= OnBufferClosed;
+    VimBuffer.DisplayStatus(string.Empty);
     toolWindow.ClearItems();
     toolWindow.CloseFrame();
 }

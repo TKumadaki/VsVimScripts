@@ -4,7 +4,7 @@ SimpleSurround.csx
 このスクリプトは[tpope/vim-surround](https://github.com/tpope/vim-surround)の機能の一部分を真似したものです。  
 以下のようにマッピングします。  
 
-`nnoremap yss :csx SimpleSurround<Enter>`
+`nnoremap yss :csx SimpleSurround<CR>`
 
 テキストファイルを開き、以下のように入力します。  
 

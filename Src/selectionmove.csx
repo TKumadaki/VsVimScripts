@@ -5,18 +5,11 @@ using Microsoft.VisualStudio.Text.Editor;
 using System;
 using Vim;
 
-IVimBuffer vimBuffer;
 IWpfTextView textView;
 
-if (!Vim.TryGetActiveVimBuffer(out vimBuffer))
+if (!VimBuffer.TryGetWpfTextView(out textView))
 {
-    Vim.DisplayError("Can not get VimBuffer");
-    return;
-}
-
-if (!vimBuffer.TryGetWpfTextView(out textView))
-{
-    Vim.DisplayError("Can not get WpfTextView");
+    VimBuffer.DisplayError("Can not get WpfTextView");
     return;
 }
 
@@ -36,8 +29,8 @@ startLine = start.Position.GetContainingLine().LineNumber;
 endLine = end.Position.GetContainingLine().LineNumber;
 lineCount = Math.Abs(endLine - startLine);
 
-vimBuffer.KeyInputStart += OnKeyInputStart;
-vimBuffer.Closed += OnBufferClosed;
+VimBuffer.KeyInputStart += OnKeyInputStart;
+VimBuffer.Closed += OnBufferClosed;
 
 private void OnKeyInputStart(object sender, KeyInputStartEventArgs e)
 {
@@ -52,23 +45,23 @@ private void OnKeyInputStart(object sender, KeyInputStartEventArgs e)
         {
             return;
         }
-        vimBuffer.SwitchMode(ModeKind.Command, ModeArgument.None);
+        VimBuffer.SwitchMode(ModeKind.Command, ModeArgument.None);
 
-        vimBuffer.KeyInputStart -= OnKeyInputStart;
+        VimBuffer.KeyInputStart -= OnKeyInputStart;
 
-        vimBuffer.Process("'<,'>move '<-2", enter: true);
-        vimBuffer.SwitchMode(ModeKind.Normal, ModeArgument.None);
+        VimBuffer.Process("'<,'>move '<-2", enter: true);
+        VimBuffer.SwitchMode(ModeKind.Normal, ModeArgument.None);
 
         textView.Selection.Clear();
 
-        vimBuffer.Process("0", enter: false);
-        vimBuffer.SwitchMode(ModeKind.VisualLine, ModeArgument.None);
+        VimBuffer.Process("0", enter: false);
+        VimBuffer.SwitchMode(ModeKind.VisualLine, ModeArgument.None);
 
         if (1 < lineCount)
         {
-            vimBuffer.Process((lineCount - 1).ToString() + "j", enter: false);
+            VimBuffer.Process((lineCount - 1).ToString() + "j", enter: false);
         }
-        vimBuffer.KeyInputStart += OnKeyInputStart;
+        VimBuffer.KeyInputStart += OnKeyInputStart;
     }
     else if (e.KeyInput.Char == 'j')
     {
@@ -77,22 +70,22 @@ private void OnKeyInputStart(object sender, KeyInputStartEventArgs e)
         {
             return;
         }
-        vimBuffer.SwitchMode(ModeKind.Command, ModeArgument.None);
+        VimBuffer.SwitchMode(ModeKind.Command, ModeArgument.None);
 
-        vimBuffer.KeyInputStart -= OnKeyInputStart;
+        VimBuffer.KeyInputStart -= OnKeyInputStart;
 
-        vimBuffer.Process("'<,'>move '>+1", enter: true);
-        vimBuffer.SwitchMode(ModeKind.Normal, ModeArgument.None);
+        VimBuffer.Process("'<,'>move '>+1", enter: true);
+        VimBuffer.SwitchMode(ModeKind.Normal, ModeArgument.None);
 
         textView.Selection.Clear();
 
-        vimBuffer.Process("0", enter: false);
-        vimBuffer.SwitchMode(ModeKind.VisualLine, ModeArgument.None);
+        VimBuffer.Process("0", enter: false);
+        VimBuffer.SwitchMode(ModeKind.VisualLine, ModeArgument.None);
         if (1 < lineCount)
         {
-            vimBuffer.Process((lineCount - 1).ToString() + "j", enter: false);
+            VimBuffer.Process((lineCount - 1).ToString() + "j", enter: false);
         }
-        vimBuffer.KeyInputStart += OnKeyInputStart;
+        VimBuffer.KeyInputStart += OnKeyInputStart;
     }
     else
     {
@@ -102,8 +95,8 @@ private void OnKeyInputStart(object sender, KeyInputStartEventArgs e)
 }
 private void EndIntercept()
 {
-    vimBuffer.KeyInputStart -= OnKeyInputStart;
-    vimBuffer.Closed -= OnBufferClosed;
+    VimBuffer.KeyInputStart -= OnKeyInputStart;
+    VimBuffer.Closed -= OnBufferClosed;
 }
 private void OnBufferClosed(object sender, EventArgs e)
 {

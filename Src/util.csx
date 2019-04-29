@@ -21,32 +21,21 @@ public class Util
     }
 }
 
-public static void DisplayError(this IVim vim, string input)
+public static void DisplayError(this IVimBuffer vimBuffer, string input)
 {
-    vim.ActiveStatusUtil.OnError(input);
+    vimBuffer.VimBufferData.StatusUtil.OnError(input);
 }
-public static void DisplayStatus(this IVim vim, string input)
+public static void DisplayStatus(this IVimBuffer vimBuffer, string input)
 {
-    vim.ActiveStatusUtil.OnStatus(input);
+    vimBuffer.VimBufferData.StatusUtil.OnStatus(input);
 }
-public static void DisplayStatusLong(this IVim vim, IEnumerable<string> value)
+public static void DisplayStatusLong(this IVimBuffer vimBuffer, IEnumerable<string> value)
 {
-    vim.ActiveStatusUtil.OnStatusLong(value);
+    vimBuffer.VimBufferData.StatusUtil.OnStatusLong(value);
 }
-public static void DisplayWarning(this IVim vim, string input)
+public static void DisplayWarning(this IVimBuffer vimBuffer, string input)
 {
-    vim.ActiveStatusUtil.OnWarning(input);
-}
-public static bool TryGetActiveVimBuffer(this IVim vim, out IVimBuffer vimBuffer)
-{
-    var activeVimBuffer = vim.ActiveBuffer;
-    if (activeVimBuffer.IsNone())
-    {
-        vimBuffer = null;
-        return false;
-    }
-    vimBuffer = activeVimBuffer.Value;
-    return true;
+    vimBuffer.VimBufferData.StatusUtil.OnWarning(input);
 }
 public static bool TryGetWpfTextView(this IVimBuffer vimBuffer, out IWpfTextView textView)
 {

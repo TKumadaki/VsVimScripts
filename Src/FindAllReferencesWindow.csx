@@ -20,26 +20,19 @@ public class FindAllReferencesWindow
     //This guid is not documented
     private const string guidFindAllReferencesWindow = "{A80FEBB4-E7E0-4147-B476-21AAF2453969}";
 
-    private IVimBuffer vimBuffer;
     private Window findAllReferencesWindow;
     private bool autoHides = true;
-    private IVim vim;
+    private IVimBuffer vimBuffer;
     private DTE2 dte;
 
-    public FindAllReferencesWindow(IVim vim)
+    public FindAllReferencesWindow(IVimBuffer vimBuffer)
     {
-        this.vim = vim;
+        this.vimBuffer = vimBuffer;
         this.dte = Util.GetDTE2();
     }
 
     public void Display()
     {
-        if (!vim.TryGetActiveVimBuffer(out vimBuffer))
-        {
-            vim.DisplayError("Can not get VimBuffer");
-            return;
-        }
-
         findAllReferencesWindow = dte.Windows.Item(guidFindAllReferencesWindow);
         autoHides = true;
 
@@ -108,7 +101,7 @@ public class FindAllReferencesWindow
         vimBuffer.KeyInputStart -= OnKeyInputStart;
         vimBuffer.Closed -= OnBufferClosed;
         //messageAction = null;
-        vim.DisplayStatus(string.Empty);
+        vimBuffer.DisplayStatus(string.Empty);
         findAllReferencesWindow.AutoHides = autoHides;
     }
 }

@@ -52,6 +52,8 @@
     <None Include="Documentation\Scroll.md" />
     <None Include="Documentation\SelectionMove.ja.md" />
     <None Include="Documentation\SelectionMove.md" />
+    <None Include="Documentation\ShowCommandText.ja.md" />
+    <None Include="Documentation\ShowCommandText.md" />
     <None Include="Documentation\SimpleSurround.ja.md" />
     <None Include="Documentation\SimpleSurround.md" />
     <None Include="Documentation\Solution.ja.md" />
@@ -71,6 +73,7 @@
     <None Include="Src\Options.csx" />
     <None Include="Src\Scroll.csx" />
     <None Include="Src\SelectionMove.csx" />
+    <None Include="Src\ShowCommandText.csx" />
     <None Include="Src\SimpleSurround.csx" />
     <None Include="Src\Solution.csx" />
     <None Include="Src\Tasklist.csx" />

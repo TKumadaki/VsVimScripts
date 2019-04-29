@@ -30,23 +30,16 @@ public class FindResultsWindow
     private IVimBuffer vimBuffer;
     private Window findResultsWindow;
     private bool autoHides = true;
-    private IVim vim;
     private IVsTextView textView;
     private IWpfTextView wpfTextView;
 
-    public FindResultsWindow(IVim vim)
+    public FindResultsWindow(IVimBuffer vimBuffer)
     {
-        this.vim = vim;
+        this.vimBuffer = vimBuffer;
     }
 
     public void Display()
     {
-        if (!vim.TryGetActiveVimBuffer(out vimBuffer))
-        {
-            vim.DisplayError("Can not get VimBuffer");
-            return;
-        }
-
         var DTE = Util.GetDTE2();
 
         findResultsWindow = DTE.Windows.Item(vsWindowKindFindResults1);
@@ -138,7 +131,7 @@ public class FindResultsWindow
         vimBuffer.KeyInputStart -= OnKeyInputStart;
         vimBuffer.Closed -= OnBufferClosed;
         //messageAction = null;
-        vim.DisplayStatus(string.Empty);
+        vimBuffer.DisplayStatus(string.Empty);
         findResultsWindow.AutoHides = autoHides;
     }
 }

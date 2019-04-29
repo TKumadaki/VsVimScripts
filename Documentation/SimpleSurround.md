@@ -4,7 +4,7 @@ SimpleSurround.csx
 This script mimics part of the functionality of [tpope/vim-surround](https://github.com/tpope/vim-surround).  
 Map it as follows.  
 
-`nnoremap yss :csx SimpleSurround<Enter>`
+`nnoremap yss :csx SimpleSurround<CR>`
 
 Open the text file and enter the following.  
 

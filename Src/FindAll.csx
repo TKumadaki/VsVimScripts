@@ -14,13 +14,6 @@ using System.Text.RegularExpressions;
 using Vim;
 using Vim.Extensions;
 
-IVimBuffer vimBuffer;
-
-if (!Vim.TryGetActiveVimBuffer(out vimBuffer))
-{
-    Vim.DisplayError("Can not get VimBuffer");
-    return;
-}
 var DTE = Util.GetDTE2();
 var findEvents = DTE.Events.FindEvents;
 static Options findOptions;
@@ -63,7 +56,7 @@ inputEnterCp.CommandAction = (x) =>
     {
         var lst = findOptions.DescriptionsAndValues().ToList<string>();
         lst.Insert(0, $"Options:{optionsMode.Buffer}");
-        Vim.DisplayStatusLong(lst);
+        VimBuffer.DisplayStatusLong(lst);
     };
     currentMode = optionsMode;
 };
@@ -100,11 +93,11 @@ optionsEnterCp.CommandAction = (x) =>
 };
 
 
-messageAction = () => Vim.DisplayStatusLong(new string[] { $"FindWhat:{inputMode.Buffer}" });
+messageAction = () => VimBuffer.DisplayStatusLong(new string[] { $"FindWhat:{inputMode.Buffer}" });
 messageAction.Invoke();
 
-vimBuffer.KeyInputStart += OnKeyInputStart;
-vimBuffer.Closed += OnBufferClosed;
+VimBuffer.KeyInputStart += OnKeyInputStart;
+VimBuffer.Closed += OnBufferClosed;
 
 public void FindExecute(string searchKeyword)
 {
@@ -125,7 +118,7 @@ public void FindExecute(string searchKeyword)
     find.SearchSubfolders = (bool)findOptions["-SearchSubfolders"];
     find.Target = (vsFindTarget)findOptions["-Target"];
 
-    frw = new FindResultsWindow(Vim);
+    frw = new FindResultsWindow(VimBuffer);
     frw.Display();
 
     findEvents.FindDone += FindDone;
@@ -153,10 +146,10 @@ public void OnBufferClosed(object sender, EventArgs e)
 }
 public void EndIntercept()
 {
-    vimBuffer.KeyInputStart -= OnKeyInputStart;
-    vimBuffer.Closed -= OnBufferClosed;
+    VimBuffer.KeyInputStart -= OnKeyInputStart;
+    VimBuffer.Closed -= OnBufferClosed;
     messageAction = null;
-    Vim.DisplayStatus(string.Empty);
+    VimBuffer.DisplayStatus(string.Empty);
 }
 public void InitilizeFindOptions(ref Options options)
 {

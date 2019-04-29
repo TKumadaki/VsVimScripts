@@ -5,7 +5,7 @@ VsVim Scripts is a C # script file that runs on [VsVim](https://github.com/jared
 
 ## Execution method
 
-See [here](https://github.com/jaredpar/VsVim/blob/master/Documentation/C%23%20scripting.md).  
+See [here](https://github.com/VsVim/VsVim/blob/master/Documentation/CSharp%20scripting.md).  
 
 ## About each script file
 
