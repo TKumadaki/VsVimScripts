@@ -26,6 +26,7 @@ SimpleSurround.csxなどを使用する時、ユーザーはコマンドマー�
 - [FindResults.csx](FindResults.ja.md)
 - FindResultsWindow.csx  
   このスクリプトは単独では動作しません。
+- [Marks.csx](Marks.ja.md)
 - [Methods.csx](Methods.ja.md)
 - Options.csx  
   このスクリプトは単独では動作しません。

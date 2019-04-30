@@ -44,6 +44,8 @@
     <None Include="Documentation\FindAllReferencesResults.md" />
     <None Include="Documentation\FindResults.ja.md" />
     <None Include="Documentation\FindResults.md" />
+    <None Include="Documentation\Marks.ja.md" />
+    <None Include="Documentation\Marks.md" />
     <None Include="Documentation\Methods.ja.md" />
     <None Include="Documentation\Methods.md" />
     <None Include="Documentation\ScriptFiles.ja.md" />
@@ -71,6 +73,7 @@
     <None Include="Src\FindAllReferencesWindow.csx" />
     <None Include="Src\FindResults.csx" />
     <None Include="Src\FindResultsWindow.csx" />
+    <None Include="Src\Marks.csx" />
     <None Include="Src\Methods.csx" />
     <None Include="Src\Options.csx" />
     <None Include="Src\Scroll.csx" />
