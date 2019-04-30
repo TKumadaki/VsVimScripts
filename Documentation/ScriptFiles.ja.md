@@ -34,6 +34,7 @@ SimpleSurround.csxなどを使用する時、ユーザーはコマンドマー�
 - [ShowCommandText.csx](ShowCommandText.ja.md)
 - [SimpleSurround.csx](SimpleSurround.ja.md)
 - [Solution.csx](Solution.ja.md)
+- [Tabs.csx](Tabs.ja.md)
 - [Tasklist.csx](TaskList.ja.md)
 - TinyVim.csx  
   このスクリプトは単独では動作しません。

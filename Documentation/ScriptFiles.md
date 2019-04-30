@@ -34,6 +34,7 @@ This is because methods that manipulate command margins are not exposed.
 - [ShowCommandText.csx](ShowCommandText.md)
 - [SimpleSurround.csx](SimpleSurround.md)
 - [Solution.csx](Solution.md)
+- [Tabs.csx](Tabs.md)
 - [Tasklist.csx](TaskList.md)
 - TinyVim.csx  
   This script does not work on its own.

@@ -58,6 +58,8 @@
     <None Include="Documentation\SimpleSurround.md" />
     <None Include="Documentation\Solution.ja.md" />
     <None Include="Documentation\Solution.md" />
+    <None Include="Documentation\Tabs.ja.md" />
+    <None Include="Documentation\Tabs.md" />
     <None Include="Documentation\TaskList.ja.md" />
     <None Include="Documentation\TaskList.md" />
     <None Include="README.ja.md" />
@@ -76,6 +78,7 @@
     <None Include="Src\ShowCommandText.csx" />
     <None Include="Src\SimpleSurround.csx" />
     <None Include="Src\Solution.csx" />
+    <None Include="Src\Tabs.csx" />
     <None Include="Src\Tasklist.csx" />
     <None Include="Src\TinyVim.csx" />
     <None Include="Src\Util.csx" />
