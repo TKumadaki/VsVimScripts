@@ -1,4 +1,5 @@
 ﻿#load "util.csx"
+#r "Microsoft.VisualStudio.Text.Data.dll"
 
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
