@@ -70,7 +70,6 @@ public void OnKeyInputStart(object sender, KeyInputStartEventArgs e)
     else if (e.KeyInput.Key == VimKey.Enter)
     {
         var selectedItem = toolWindow.GetSelectedItem();
-        EndIntercept();
         if (selectedItem != null)
         {
             var t = selectedItem.GetType();
@@ -81,6 +80,7 @@ public void OnKeyInputStart(object sender, KeyInputStartEventArgs e)
                     null);
             GoToTab.Invoke(sharedService, new object[] { index });
         }
+        EndIntercept();
     }
     else if (e.KeyInput.Key == VimKey.Escape)
     {

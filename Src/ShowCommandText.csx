@@ -1,5 +1,6 @@
 ﻿#load "util.csx"
 #r "Microsoft.VisualStudio.ComponentModelHost.dll"
+#r "Microsoft.VisualStudio.Text.Data.dll"
 
 using Microsoft.VisualStudio.ComponentModelHost;
 using Microsoft.VisualStudio.Shell;
