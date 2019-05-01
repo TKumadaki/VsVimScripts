@@ -1,7 +1,7 @@
 VsVim Scripts
 ===
 
-VsVim Scripts is a C # script file that runs on [VsVim](https://github.com/jaredpar/VsVim).  
+VsVim Scripts is a C # script file that runs on [VsVim](https://github.com/VsVim/VsVim).  
 
 ## Execution method
 

@@ -1,7 +1,7 @@
 VsVim Scripts
 ===
 
-VsVim Scriptsは、[VsVim](https://github.com/jaredpar/VsVim)で動作するC#のスクリプトファイルです。
+VsVim Scriptsは、[VsVim](https://github.com/VsVim/VsVim)で動作するC#のスクリプトファイルです。
 
 ## 実行方法
 
