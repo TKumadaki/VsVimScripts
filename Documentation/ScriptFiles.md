@@ -13,7 +13,10 @@ The reason for these is that the script gets the key event of the editor that ex
 
 When using SimpleSurround.csx etc., the user needs to enter a value in the command margin.  
 The command margin at this time is a poor function that the cursor is not displayed and the arrow keys can not be used.  
-This is because methods that manipulate command margins are not exposed.  
+
+I use a lot of reflection in scripts.
+This is a unrecommended method.
+If VsVim or Visual Studio update, scripts may not work.
 
 ## Description of each script file
 
@@ -26,6 +29,7 @@ This is because methods that manipulate command margins are not exposed.
 - [FindResults.csx](FindResults.md)
 - FindResultsWindow.csx  
   This script does not work on its own.
+- [JDash.csx](JDash.md)
 - [Marks.csx](Marks.md)
 - [Methods.csx](Methods.md)
 - Options.csx  

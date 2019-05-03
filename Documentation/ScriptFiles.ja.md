@@ -13,7 +13,10 @@ Solution.csxやFindResultsWindow.csxはVisual Studioのツールウィンドウ�
 
 SimpleSurround.csxなどを使用する時、ユーザーはコマンドマージンに値を入力する必要があります。  
 この時のコマンドマージンはカーソルが表示されず、矢印キーも使えない貧弱な機能になっています。  
-これは、コマンドマージンを操作するメソッドが公開されていないためです。  
+
+私はこのスクリプトでリフレクションを多用しています。
+これは推奨されない方法です。
+VsVimやVisual Studioが更新されると、このスクリプトは動かなくなるかもしれません。
 
 ## 各スクリプトファイルの説明
 
@@ -26,6 +29,7 @@ SimpleSurround.csxなどを使用する時、ユーザーはコマンドマー�
 - [FindResults.csx](FindResults.ja.md)
 - FindResultsWindow.csx  
   このスクリプトは単独では動作しません。
+- [JDash.csx](JDash.ja.md)
 - [Marks.csx](Marks.ja.md)
 - [Methods.csx](Methods.ja.md)
 - Options.csx  
