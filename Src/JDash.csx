@@ -27,6 +27,7 @@ public class Scroller
     private DateTime _lastKeyPressedTime = DateTime.MinValue;
     private Direction _lastKeyPressedDirection = Direction.None;
     private double _lastKeyPressedDistanceFromTop = 0;
+    private int _lastKeyPressedLineNumber = 0;
     private int _keyPressedCount = 0;
     private bool _scrollMode = false;
     private IVimBuffer _vimBuffer;
@@ -55,6 +56,7 @@ public class Scroller
         _lastKeyPressedDirection = Direction.None;
         _lastKeyPressedDistanceFromTop = 0;
         _keyPressedCount = 0;
+        _lastKeyPressedLineNumber = 0;
     }
 
     private bool CanSwitchScrollMode(char letter)
@@ -66,9 +68,17 @@ public class Scroller
         if (direction == Direction.None || _lastKeyPressedDirection != direction)
         {
             _lastKeyPressedDirection = direction;
+            _lastKeyPressedLineNumber = 0;
             _keyPressedCount = 0;
             return false;
         }
+
+        var caretLineNumber = _textView.Caret.Position.BufferPosition.GetContainingLine().LineNumber;
+        if (caretLineNumber == _lastKeyPressedLineNumber)
+            return false;
+
+        _lastKeyPressedLineNumber = caretLineNumber;
+
         DateTime keyPressedTime = DateTime.Now;
         if (1 < _keyPressedCount)
         {
@@ -98,7 +108,6 @@ public class Scroller
     private void SwitchNormalMode()
     {
         Initilize();
-        _vimBuffer.DisplayStatus(string.Empty);
         _scrollMode = false;
     }
 
