@@ -42,7 +42,7 @@
     <None Include="Documentation\FindAllReferences.md" />
     <None Include="Documentation\FindAllReferencesResults.ja.md" />
     <None Include="Documentation\FindAllReferencesResults.md" />
-    <None Include="Documentation\MethodTextObject..md" />
+    <None Include="Documentation\MethodTextObject.md" />
     <None Include="Documentation\MethodTextObject.ja.md" />
     <None Include="Documentation\FindResults.ja.md" />
     <None Include="Documentation\FindResults.md" />
