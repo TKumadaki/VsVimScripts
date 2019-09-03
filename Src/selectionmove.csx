@@ -1,5 +1,6 @@
 ﻿#load "util.csx"
 #r "Microsoft.VisualStudio.Text.Data.dll"
+#r "Microsoft.VisualStudio.Text.Logic.dll"
 
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
