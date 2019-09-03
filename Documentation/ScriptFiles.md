@@ -31,6 +31,7 @@ If VsVim or Visual Studio update, scripts may not work.
   This script does not work on its own.
 - [JDash.csx](JDash.md)
 - [Marks.csx](Marks.md)
+- [MethodTextObject.csx](MethodTextObject.md)
 - [Methods.csx](Methods.md)
 - Options.csx  
   This script does not work on its own.

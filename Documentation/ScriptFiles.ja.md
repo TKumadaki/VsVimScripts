@@ -31,6 +31,7 @@ VsVimやVisual Studioが更新されると、このスクリプトは動かな�
   このスクリプトは単独では動作しません。
 - [JDash.csx](JDash.ja.md)
 - [Marks.csx](Marks.ja.md)
+- [MethodTextObject.csx](MethodTextObject.ja.md)
 - [Methods.csx](Methods.ja.md)
 - Options.csx  
   このスクリプトは単独では動作しません。
