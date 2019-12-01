@@ -14,5 +14,5 @@ VsVim Scriptsは、[VsVim](https://github.com/VsVim/VsVim)で動作するC#の�
 ## ライセンス
 
 このプロジェクトのすべてのコードはApache 2ライセンスの対象となっています。そのコピーはLicense.txtという名前で同じディレクトリにあります。  
-VsVimは[Jared Parsons](https://github.com/jaredpar)の著作物です。
+VsVimとEasyMotionは[Jared Parsons](https://github.com/jaredpar)の著作物です。
 

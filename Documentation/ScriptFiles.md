@@ -21,6 +21,7 @@ If VsVim or Visual Studio update, scripts may not work.
 ## Description of each script file
 
 - [CalledCount.csx](CalledCount.md)
+- [EasyMotion.csx](EasyMotion.md)
 - [FindAll.csx](FindAll.md)
 - [FindAllReferences.csx](FindAllReferences.md)
 - [FindAllReferencesResults.csx](FindAllReferencesResults.md)

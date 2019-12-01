@@ -21,6 +21,7 @@ VsVimやVisual Studioが更新されると、このスクリプトは動かな�
 ## 各スクリプトファイルの説明
 
 - [CalledCount.csx](CalledCount.ja.md)
+- [EasyMotion.csx](EasyMotion.ja.md)
 - [FindAll.csx](FindAll.ja.md)
 - [FindAllReferences.csx](FindAllReferences.ja.md)
 - [FindAllReferencesResults.csx](FindAllReferencesResults.ja.md)
