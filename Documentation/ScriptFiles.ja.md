@@ -30,6 +30,7 @@ VsVimやVisual Studioが更新されると、このスクリプトは動かな�
 - [FindResults.csx](FindResults.ja.md)
 - FindResultsWindow.csx  
   このスクリプトは単独では動作しません。
+- [IndentObject.csx](IndentObject.ja.md)
 - [JDash.csx](JDash.ja.md)
 - [Marks.csx](Marks.ja.md)
 - [MethodTextObject.csx](MethodTextObject.ja.md)

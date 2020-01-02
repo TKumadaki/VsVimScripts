@@ -30,6 +30,7 @@ If VsVim or Visual Studio update, scripts may not work.
 - [FindResults.csx](FindResults.md)
 - FindResultsWindow.csx  
   This script does not work on its own.
+- [IndentObject.csx](IndentObject.md)
 - [JDash.csx](JDash.md)
 - [Marks.csx](Marks.md)
 - [MethodTextObject.csx](MethodTextObject.md)
