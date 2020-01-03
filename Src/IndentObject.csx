@@ -1,4 +1,6 @@
-﻿#load "util.csx"
+﻿#r "Microsoft.VisualStudio.Text.Data.dll"
+
+#load "util.csx"
 
 using System.Linq;
 using Microsoft.VisualStudio.Text;
