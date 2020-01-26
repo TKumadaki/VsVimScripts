@@ -23,6 +23,15 @@ vnoremap ii           :csx IndentObject vii<CR>
 
 ```
 
-`count` is not supported.  
-The mapping is different from the original.  
-Therefore, it not be versatile when compared to the original.  
+When using count, perform the following mapping.
+
+```
+vnoremap 2ai           :csx IndentObject vai2<CR>
+vnoremap 2aI           :csx IndentObject vaI2<CR>
+vnoremap 2ii           :csx IndentObject vii2<CR>
+
+vnoremap 3ai           :csx IndentObject vai3<CR>
+vnoremap 3aI           :csx IndentObject vaI3<CR>
+vnoremap 3ii           :csx IndentObject vii3<CR>
+
+```

@@ -22,7 +22,16 @@ vnoremap aI           :csx IndentObject vaI<CR>
 vnoremap ii           :csx IndentObject vii<CR>
 
 ```
+countを使用する場合は、以下のようなマッピングを行ってください。
 
-`count`はサポートされません。  
-マッピングがオリジナルと異なります。  
-そのため、オリジナルと比較すると汎用性はありません。
+```
+vnoremap 2ai           :csx IndentObject vai2<CR>
+vnoremap 2aI           :csx IndentObject vaI2<CR>
+vnoremap 2ii           :csx IndentObject vii2<CR>
+
+vnoremap 3ai           :csx IndentObject vai3<CR>
+vnoremap 3aI           :csx IndentObject vaI3<CR>
+vnoremap 3ii           :csx IndentObject vii3<CR>
+
+```
+

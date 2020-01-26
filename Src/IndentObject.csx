@@ -46,33 +46,53 @@ public void OnSwitchedMode(object sender, SwitchModeEventArgs e)
 
     currentIndent = GetIndent(lines[caretPositionIndex]);
 
-    int indent;
-    int startIndentIndex = 0;
-    for (var i = caretPositionIndex - 1; 0 <= i; i--)
+    int indentLevel = 1;
+    if (3 < Arguments.Trim().Length)
     {
-        indent = GetIndent(lines[i]);
-        if (indent < 0)
-            continue;
-
-        if (indent < currentIndent)
-        {
-            startIndentIndex = i;
-            break;
-        }
+        int.TryParse(Arguments.Trim().Substring(3), out indentLevel);
     }
 
+    int indent = 0;
+    int startIndentIndex = 0;
     int endIndentIndex = lines.Count - 1;
-    for (var i = caretPositionIndex + 1; i < lines.Count; i++)
-    {
-        indent = GetIndent(lines[i]);
-        if (indent < 0)
-            continue;
+    int nextIndent = 0;
 
-        if (indent < currentIndent)
+    for (var i = 0; i < indentLevel; i++)
+    {
+        nextIndent = int.MaxValue;
+        for (var j = caretPositionIndex - 1; 0 <= j; j--)
         {
-            endIndentIndex = i;
-            break;
+            indent = GetIndent(lines[j]);
+            if (indent < 0)
+                continue;
+
+            if (indent < currentIndent)
+            {
+                nextIndent = indent;
+                if (i == (indentLevel - 1))
+                {
+                    startIndentIndex = j;
+                }
+                break;
+            }
         }
+
+        for (var j = caretPositionIndex + 1; j < lines.Count; j++)
+        {
+            indent = GetIndent(lines[j]);
+            if (indent < 0)
+                continue;
+
+            if (indent < currentIndent)
+            {
+                if (i == (indentLevel - 1))
+                {
+                    endIndentIndex = j;
+                }
+                break;
+            }
+        }
+        currentIndent = nextIndent;
     }
 
     string textKind = Arguments.Trim().Substring(1, 2);
